@@ -29,7 +29,8 @@ resuelvan \textbf{directamente} los ejercicios.
 > (mcm 8 6)
 24
 \end{verbatim}
-\item $\textbf{average}$ - Dado una lista no vacia de numeros, regresar el
+
+\item $\textbf{average}$ - Dado una lista no vacía de números, regresar el
   promedio de esta, \textit{i.e.}
 \begin{verbatim}
 > (average ’(5))
@@ -40,14 +41,15 @@ resuelvan \textbf{directamente} los ejercicios.
 10
 \end{verbatim}
 
-\item $\textbf{reduce}$ - Dada una función de aridad 2 y una lista de
-  n elementos, regresar la evaluación de la función encadenada de
-  todos los elementos, \textit{i.e.}
+\item $\textbf{primes}$ - Dado un numero entero positivo regresar una lista los
+números primos contenidos entre 2 y el numero entero dado, \textit{i.e.}
 \begin{verbatim}
-> (reduce + ’(1 2 3 4 5 6 7 8 9 10))
-55
-> (reduce zip ’((1 2 3) (4 5 6) (7 8 9)))
-’((1 (4 7)) (2 (5 8)) (3 (6 9)))
+> (primes 30)
+’(2 3 5 7 11 13 17 19 23 29)
+> (primes 11)
+'(2 3 5 7 11)
+> (primes 1)
+'()
 \end{verbatim}
 
 \newpage
@@ -72,16 +74,16 @@ menor, y si una de las listas es vacía, regresar una lista vacía,
 ’((8 3) (9 4))
 \end{verbatim}
 
-\item $\textbf{primes}$ - Dado un numero entero positivo regresar una lista los
-numroes primos contenidos entre 2 y el numero entero dado, \textit{i.e.}
+\item $\textbf{reduce}$ - Dada una función de aridad 2 y una lista de
+  n elementos, regresar la evaluación de la función encadenada de
+  todos los elementos, \textit{i.e.}
 \begin{verbatim}
-> (primes 30)
-’(2 3 5 7 11 13 17 19 23 29)
-> (primes 11)
-'(2 3 5 7 11)
-> (primes 1)
-'()
+> (reduce + ’(1 2 3 4 5 6 7 8 9 10))
+55
+> (reduce zip ’((1 2 3) (4 5 6) (7 8 9)))
+’((1 (4 7)) (2 (5 8)) (3 (6 9)))
 \end{verbatim}
+
 \end{itemize}
 
 \textbf{Sección II.} Define las funciones que se te piden. Puedes crear
@@ -113,29 +115,29 @@ utilizar funciones básicas de Racket como son \texttt{car, cdr, cons,
 ’((2 3) (5 6) (8 9))
 \end{verbatim}
 
+\newpage
+
 \item $\textbf{mfilter}$ - Dado un predicado de un argumento y una
   lista, regresar la lista original sin los elementos que al aplicar
   el predicado, regresa falso (un predicado es una función que
   regresa un valor booleano), \textit{i.e.}
 \begin{verbatim}
-> (mflatten ’(1 2 3))
-’(1 2 3)
-> (mflatten ’((1 4) 2 3))
-’(1 4 2 3)
-> (mflatten ’((1 (4 5 6)) 2 3))
-’(1 4 5 6 2 3)
-> (mflatten ’((1 (4 5 6)) 2 (3 (7 9) 8)))
-’(1 4 5 6 2 3 7 9 8)
+> (mfilter (lambda (x) (not (zero? x))) ’(2 0 1 4 0))
+’(2 1 4)
+> (mfilter (lambda (l) (not (empty? l))) ’((1 4 2) () (2 4) ()))
+’((1 4 2) (2 4))
+> (mfilter (lambda (n) (= (modulo n 2) 0)) ’(1 2 3 4 5 6))
+’(2 4 6)
 \end{verbatim}
 
 \item $\textbf{mreverse}$ - Dada una lista, regresar otra lista con
   los elementos de la lista original en orden inverso, \textit{i.e.}
 \begin{verbatim}
-> (reverve ’(1 2 3 4 5))
+> (mreverve ’(1 2 3 4 5))
 ’(5 4 3 2 1)
-> (reverve ’(100 99))
+> (mreverve ’(100 99))
 ’(99 100)
-> (reverve ’())
+> (mreverve ’())
 ’()
 \end{verbatim}
 
@@ -154,7 +156,7 @@ utilizar funciones básicas de Racket como son \texttt{car, cdr, cons,
 \end{verbatim}
 \end{itemize}
 
-\textbf{Punto extra: } \texttt{day-of-week} - Dado un año, mes y día,
+\textbf{Punto extra:} \texttt{day-of-week} - Dado un año, mes y día,
 determinar qué día de la semana es, empezando desde 0 con lunes y
 terminando domingo con 6, \textit{i.e.}
 \begin{verbatim}
