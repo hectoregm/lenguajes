@@ -15,6 +15,33 @@ En esta práctica se tienen once ejercicios, los primeros diez son
 obligatorios siendo solamente el ultimo opcional con valor de un punto
 extra. Por lo tanto la calificación máxima que se puede obtener en
 esta práctica es 11.
+
+Esta practica debe ser implementada con la variante plai, es decir
+su archivo rkt debe tener como primer linea lo siguiente:
+\texttt{\#lang plai}
+
+Todos los ejercicios requieren contar con pruebas mediante el uso de
+la funcion \texttt{test}:
+\begin{verbatim}
+(test <result-expr> <expected-expr>)
+\end{verbatim}
+
+En donde \textit{result-expr} es la expresion que se evalua a cierto
+valor que es comparado con \textit{expected-expr} que es otra
+expresion que evalua al valor esperado. Si las dos expresiones evaluan
+a lo mismo la prueba imprime el exito de la prueba, en caso contrario
+indicar un error.
+
+\begin{verbatim}
+> (test (+ 1 2) 3)
+(good (+ 1 2) 3 3 "at line 34")
+
+> (test (+ 1 2) 4)
+(bad (+ 1 2) 3 4 "at line 36")
+\end{verbatim}
+
+Cada ejercicio debe contar al menos con cinco pruebas.
+
 \section{Ejercicios}
 \textbf{Sección I.} Define las funciones que se te piden. Puedes crear y utilizar
 funciones auxiliares. No puedes utilizar funciones de Racket que
@@ -29,6 +56,8 @@ resuelvan \textbf{directamente} los ejercicios.
 > (mcm 8 6)
 24
 \end{verbatim}
+
+\newpage
 
 \item $\textbf{average}$ - Dado una lista no vacía de números, regresar el
   promedio de esta, \textit{i.e.}
@@ -51,8 +80,6 @@ números primos contenidos entre 2 y el numero entero dado, \textit{i.e.}
 > (primes 1)
 '()
 \end{verbatim}
-
-\newpage
 
 \item $\textbf{zip}$ - Dadas dos listas, regresar una lista cuyos elementos son
   listas de tamaños dos, tal que par la i-ésima lista, el primer
@@ -114,8 +141,6 @@ utilizar funciones básicas de Racket como son \texttt{car, cdr, cons,
 > (mmap cdr ’((1 2 3) (4 5 6) (7 8 9)))
 ’((2 3) (5 6) (8 9))
 \end{verbatim}
-
-\newpage
 
 \item $\textbf{mfilter}$ - Dado un predicado de un argumento y una
   lista, regresar la lista original sin los elementos que al aplicar
