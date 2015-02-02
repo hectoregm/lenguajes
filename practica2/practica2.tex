@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm,letterpaper]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\author{Profesora: Karla Ramírez Pulido\\
+  Ayudante teoría: Joshua Emmanuel Mendoza Mendieta\\
+  Ayudante laboratorio: Héctor Enrique Gómez Morales}
+\title{Practica 2 - Data Types Parte 1 de 2}
+\date{Fecha de inicio: 6 de febrero de 2015\\
+  \textbf{Fecha de entrega: 20 de febrero de 2015}}
+\begin{document}
+\maketitle
+\section{Instrucciones}
+En esta práctica se tienen once ejercicios, los primeros diez son
+obligatorios siendo solamente el ultimo opcional con valor de un punto
+extra. Por lo tanto la calificación máxima que se puede obtener en
+esta práctica es 11.
+
+Esta practica se puede entregar en equipos de a lo máximo dos
+personas, pero se recomienda que esta practica la hagan de forma
+individual.
+
+Esta práctica debe ser implementada con la variante plai, es decir
+su archivo rkt debe tener como primer linea lo siguiente:
+\texttt{\#lang plai}
+
+Todos los ejercicios requieren contar con pruebas mediante el uso de
+la función \texttt{test}:
+\begin{verbatim}
+(test <result-expr> <expected-expr>)
+\end{verbatim}
+
+En donde \textit{result-expr} es la expresión que se evalúa a cierto
+valor que es comparado con \textit{expected-expr} que es otra
+expresión que evalúa al valor esperado. Si las dos expresiones evalúan
+a lo mismo la prueba imprime el éxito de la prueba, en caso contrario
+indicar un error.
+
+\begin{verbatim}
+> (test (+ 1 2) 3)
+(good (+ 1 2) 3 3 "at line 34")
+
+> (test (+ 1 2) 4)
+(bad (+ 1 2) 3 4 "at line 36")
+\end{verbatim}
+
+Cada ejercicio debe contar al menos con cinco pruebas.
+
+\section{Ejercicios}
+\textbf{Sección I.} Define las funciones que se te piden. Puedes crear y utilizar
+funciones auxiliares. No puedes utilizar funciones de Racket que
+resuelvan \textbf{directamente} los ejercicios.
+\begin{itemize}
+\item $\textbf{mcd \& mcm}$ - Define las funciones mcd y mcm que
+  toman dos números y regresan su máximo común divisor y mínimo común
+  múltiplo respectivamente, \textit{i.e.}
+\begin{verbatim}
+> (mcd 72 32)
+8
+> (mcm 8 6)
+24
+\end{verbatim}
+
+\newpage
+
+\end{itemize}
+\end{document}
