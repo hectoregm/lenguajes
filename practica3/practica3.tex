@@ -1,0 +1,213 @@
+\documentclass{article}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm,letterpaper]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\author{Profesora: Karla Ramírez Pulido\\
+  Ayudante teoría: Joshua Emmanuel Mendoza Mendieta\\
+  Ayudante laboratorio: Héctor Enrique Gómez Morales}
+\title{Practica 3 - Data Types Parte 2 de 2}
+\date{Fecha de inicio: 13 de febrero de 2015\\
+  \textbf{Fecha de entrega: 27 de febrero de 2015}}
+\begin{document}
+\maketitle
+\section{Instrucciones}
+En esta práctica se tienen doce ejercicios, los primeros once son
+obligatorios siendo solamente el ultimo opcional con valor de un
+punto extra. Por lo tanto la calificación máxima que se puede obtener en
+esta práctica es 11.
+
+Esta practica se puede entregar en equipos de a lo máximo dos
+personas, pero se recomienda que esta practica la hagan de forma
+individual.
+
+Esta práctica debe ser implementada con la variante plai, es decir
+su archivo rkt debe tener como primer linea lo siguiente:
+\texttt{\#lang plai}. Pueden utilizar sólo la paquetería básica de
+\texttt{racket/base}, las funciones que se implementaron en la
+practica 1 y funciones auxiliares que ustedes definan.
+
+Todos los ejercicios requieren contar con pruebas mediante el uso de
+la función \texttt{test}:
+\begin{verbatim}
+(test <result-expr> <expected-expr>)
+\end{verbatim}
+
+En donde \textit{result-expr} es la expresión que se evalúa a cierto
+valor que es comparado con \textit{expected-expr} que es otra
+expresión que evalúa al valor esperado. Si las dos expresiones evalúan
+a lo mismo la prueba imprime el éxito de la prueba, en caso contrario
+indicar un error.
+
+\begin{verbatim}
+> (test (+ 1 2) 3)
+(good (+ 1 2) 3 3 "at line 34")
+
+> (test (+ 1 2) 4)
+(bad (+ 1 2) 3 4 "at line 36")
+\end{verbatim}
+
+Cada ejercicio debe contar al menos con cinco pruebas.
+
+\section{Ejercicios}
+\textbf{Sección I. Tipos de datos recursivos y no recursivos} Define
+los siguientes tipos de datos que se te piden.
+
+\begin{itemize}
+\item $\textbf{Array}$ - Definir un tipo de dato \texttt{Array}
+  que tenga un constructor de tipo \texttt{MArray}. El entero sirve
+  para definir el tamaño del arreglo., \textit{i.e.}
+\begin{verbatim}
+> (MArray 4 '(1 2 3))
+(Marray 4 '(1 2 3))
+\end{verbatim}
+
+\newpage
+
+\item $\textbf{List}$ - Definir un tipo de dato recursivo llamado
+  \texttt{MList} que tenga a la lista vacía \texttt{MEmpty} y el
+  constructor de tipo \texttt{MCons}, \textit{i.e.}
+\begin{verbatim}
+> (MEmpty)
+(MEmpty)
+> (MCons 1 (MCons 2 (MCons 3 (MEmpty))))
+(MCons 1 (MCons 2 (MCons 3 (MEmpty))))
+> (MCons 7 (MCons 4 (MCons 10 (MEmpty))))
+(MCons 7 (MCons 4 (MCons 10 (MEmpty))))
+\end{verbatim}
+
+\item $\textbf{NTree}$ - Definir un tipo de dato recursivo llamado
+  \texttt{NTree} que tenga como una hoja nula \texttt{TLEmpty} y un
+  constructor de tipo \texttt{NodeN} (estos árboles son n-ários), \textit{i.e.}
+\begin{verbatim}
+> (TLEmpty)
+(TLEmpty)
+> (NodeN 1 (list (TLEmpty) (TLEmpty) (TLEmpty)))
+(NodeN 1 (list (TLEmpty) (TLEmpty) (TLEmpty)))
+> (NodeN 1 (list (NodeN 2 (list (TLEmpty))) 
+                 (NodeN 3 (list (TLEmpty))) 
+                 (NodeN 4 (list (TLEmpty) (TLEmpty) (TLEmpty)))))
+(NodeN
+ 1
+ (list
+  (NodeN 2 (list (TLEmpty)))
+  (NodeN 3 (list (TLEmpty)))
+  (NodeN 4 (list (TLEmpty) (TLEmpty) (TLEmpty)))))
+\end{verbatim}
+
+\item $\textbf{Position}$ - Define un tipo de dato llamado
+  \texttt{Position} que tenga un constructor de tipo \texttt{2D-Point}
+  que toma dos números reales que indican una posición
+  en el plano cartesiano, \textit{i.e.}
+\begin{verbatim}
+> (2D-Point 0 0)
+(2D-Point 0 0)
+> (2D-Point 1 (sqrt 2))
+(2D-Point 1 1.4142135623730951)
+\end{verbatim}
+
+\item $\textbf{Figure}$ - Define un tipo de dato llamado
+  \texttt{Figure}
+  que tenga tres constructores:
+  \begin{itemize}
+    \item{\texttt{Circle} - Un constructor que toma un centro dada por un
+      \texttt{Position} y un radio.}
+    \item{\texttt{Square} - Un constructor que toma una posición de la
+      esquina superior izquierda del cuadrado y una longitud.}
+    \item{\texttt{Rectangle} - Un constructor que toma una posición de
+    la esquina superior izquierda del rectángulo, su ancho y su largo.}
+  \end{itemize}
+\begin{verbatim}
+> (Circle (2D-Point 2 2) 2)
+(Circle (2D-Point 2 2) 2)
+> (Square (2D-Point 0 3) 3)
+(Square (2D-Point 0 3) 3)
+> (Rectangle (2D-Point 0 2) 2 3)
+(Rectangle (2D-Point 0 2) 2 3)
+\end{verbatim}
+
+
+\textbf{Sección II. Funciones sobre Datos} Define
+las siguientes funciones que se te piden. Puedes crear y utilizar
+funciones auxiliares. No puedes utilizar funciones de Racket que
+resuelvan \textbf{directamente} los ejercicios.
+
+\item $\textbf{setvalueA}$ - Dado un arreglo de tipo \texttt{Array},
+  una posición y un valor numérico v, regresar otro arreglo con el
+  valor v intercambiado en la posición indicada del arreglo original.
+  En caso de que la posición sea igual o mayor al tamaño especificado
+  en el arreglo, regresar un error \texttt{Out of bounds},
+  \textit{i.e.}
+\begin{verbatim}
+> (define ar (MArray 5 '(0 0 0 0 0)))
+> ar
+(MArray 5 '(0 0 0 0 0))
+> (setvalueA ar 2 4)
+(MArray 5 '(0 0 4 0 0))
+> (setvalueA ar 4 4)
+(MArray 5 ’(0 0 0 0 4))
+> (setvalueA ar 5 4)
+. . setvalueA: Out of bounds
+\end{verbatim}
+
+\item $\textbf{printML}$ - Dada una lista de tipo \texttt{MList},
+  imprimirla en un formato legible. Puedes utilizar las funciones para
+  manipular strings y la función \texttt{$\sim a$}, \textit{i.e.}
+\begin{verbatim}
+> (printML (MEmpty))
+"[]"
+> (printML (MCons 7 (MEmpty)))
+"[7]"
+> (printML (MCons 7 (MCons 4 (MEmpty))))
+"[7, 4]"
+> (printML (MCons (MCons 1 (MCons 2 (MEmpty))) (MCons 3 (MEmpty))))
+"[[1, 2], 3]"
+\end{verbatim}
+
+\item $\textbf{concatML}$ - Dadas dos listas de tipo \texttt{MList},
+  regresar la concatenación, \textit{i.e.}
+\begin{verbatim}
+> (concatML (MCons 7 (MCons 4 (MEmpty))) (MCons 1 (MEmpty)))
+(MCons 7 (MCons 4 (MCons 1 (MEmpty))))
+> (concatML (MCons 7 (MCons 4 (MEmpty))) (MCons 1 (MCons 10 (MEmpty))))
+(MCons 7 (MCons 4 (MCons 1 (MCons 10 (MEmpty)))))
+\end{verbatim}
+
+\item $\textbf{lengthML}$ - Dada una lista de tipo MLista, regresar la
+  cantidad de elementos que tiene, \textit{i.e.}
+\begin{verbatim}
+> (lengthML (MEmpty))
+0
+> (lengthML (MCons 7 (MCons 4 (MEmpty))))
+2
+\end{verbatim}
+
+\item $\textbf{area}$ - Dada una figura del tipo \texttt{Figure},
+  regresar el área de la figura, \textit{i.e.}
+\begin{verbatim}
+> (area (Circle (2D-Point 5 5) 4))
+50.26548245743669
+> (area (Square (2D-Point 0 0) 20))
+400
+> (area (Rectangle (2D-Point 3 4) 5 10))
+50
+\end{verbatim}
+
+\item $\textbf{in-figure?}$ - Dada una figura \texttt{fig} del tipo \texttt{Figure}
+  y una posición \texttt{p} del tipo \texttt{2D-Point} regresa \#t si \texttt{p} esta
+  dentro de \texttt{fig} y \#f en caso contrario, \textit{i.e.}
+\begin{verbatim}
+> (in-figure? (Square (2D-Point 5 5) 4) (2D-Point 6 6))
+#t
+> (in-figure? (Rectangle (2D-Point 5 5) 4 6) (2D-Point 4 4))
+#f
+\end{verbatim}
+
+\end{itemize}
+
+\textbf{Punto extra:} \texttt{in-figure-3D?} - Dados los siguientes tipos de datos:
+\begin{itemize}
+\item{ \texttt{3D-Point} que define un punto en 3D.}
+\item{\texttt{Figure3D} que define una figura en 3D que tenga al menos tres variantes (por ejemplo: Sphere, Cube)}.
+\end{itemize}
+Entonces se debe implementar \texttt{in-figure-3D?} que tome una figura \texttt{fig} del tipo \texttt{Figure3D} y una posición \texttt{p} del tipo \texttt{3D-Point} entonces regresa \#t si \texttt{p} esta dentro de \texttt{fig} y \#f en caso contrario
+\end{document}
