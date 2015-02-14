@@ -2,6 +2,19 @@
 \usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm,letterpaper]{geometry}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
+
+\usepackage{verbatim, array}
+\usepackage{hyperref}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx}
+
+\renewcommand{\labelenumii}{\theenumii)}
+\newcommand{\gradeone}{(\textbf{1pt}) }
+\newcommand{\grade}[1]{(\textbf{#1pts}) }
+\newcommand{\header}[1]{\begin{center}\textbf{#1}\end{center}\vskip10pt}
+\newcommand{\jimage}[2]{\includegraphics[width=#1\textwidth]{#2}\vskip10pt}
+\newcommand{\jcimage}[2]{\begin{center}\includegraphics[width=#1\textwidth]{#2}\end{center}\vskip10pt}
+
 \author{Profesora: Karla Ramírez Pulido\\
   Ayudante teoría: Joshua Emmanuel Mendoza Mendieta\\
   Ayudante laboratorio: Héctor Enrique Gómez Morales}
@@ -62,30 +75,97 @@ los siguientes tipos de datos que se te piden.
 \end{verbatim}
 \end{itemize}
 
-\textbf{Sección II. Funciones sobre Datos} Define
-las siguientes funciones que se te piden. Puedes crear y utilizar
-funciones auxiliares. No puedes utilizar funciones de Racket que
-resuelvan \textbf{directamente} los ejercicios.
-
-\begin{itemize}
-\item $\textbf{setvalueA}$ - Dado un arreglo de tipo \texttt{Array},
-  una posición y un valor numérico v, regresar otro arreglo con el
-  valor v intercambiado en la posición indicada del arreglo original.
-  En caso de que la posición sea igual o mayor al tamaño especificado
-  en el arreglo, regresar un error \texttt{Out of bounds},
-  \textit{i.e.}
+\textbf{Sección II. Árboles Binarios}
+Para las siguientes funciones, utiliza el tipo de dato \verb;BTree;
+definido en \verb;practica3-base.rkt;:
 \begin{verbatim}
-> (define ar (MArray 5 '(0 0 0 0 0)))
-> ar
-(MArray 5 '(0 0 0 0 0))
-> (setvalueA ar 2 4)
-(MArray 5 '(0 0 4 0 0))
-> (setvalueA ar 4 4)
-(MArray 5 ’(0 0 0 0 4))
-> (setvalueA ar 5 4)
-. . setvalueA: Out of bounds
+(define-type BTree
+  [EmptyBT]
+  [BNode (c procedure?)
+         (l BTree?)
+         (e any?)
+         (r BTree?)])
 \end{verbatim}
 
+Donde el primer parámetro del constructor de tipo \verb;BNode; es una función de comparación que recibe dos argumentos y regresa un booleano, indicando si el primer argumento es menor que el segundo. Para un árbol de números, la función de comparación sería \verb;<;, para strings sería \verb;string<?;. \\
+    
+En esta práctica utilizaremos abreviaciones para los constructores de tipos:
+
+\begin{enumerate}
+\item \verb;ebt; es lo mismo que \verb;(EmptyBT);
+\item \verb;(bnn ebt 1 ebt); es lo mismo que \verb;(BNode < (EmptyBT) 1 (EmptyBT));
+\item \verb;(bns ebt ``hello'' ebt); es lo mismo que \verb;(BNode string<? (EmptyBT) ``hello'' (EmptyBT));
+\end{enumerate}
+
+Por último, cuentas con la función \verb;printAB; que recibe un árbol de tipo BTree y regresa su representación gráfica, para que puedas depurar tu código: \\
+
+\jimage{0.9}{imgs/printab1.png}
+
+\newpage
+\begin{itemize}
+\item \texttt{nniAB} - Dado un árbol de tipo ArbolB, determinar el número de nodos internos que tiene.
+\begin{verbatim}
+> (nniAB (HVaciaB))
+0
+> (nniAB (NodoB < (NodoB < (HVaciaB) 3 (HVaciaB)) 1 (NodoB < (HVaciaB) 2 (HVaciaB))))
+1
+\end{verbatim}
+
+\item \texttt{nhAB} - Dado un árbol de tipo ArbolB, determinar el número de hojas no vacías.
+\begin{verbatim}
+> (nhAB (HVaciaB))
+0
+> (nhAB (NodoB < (NodoB < (HVaciaB) 3 (HVaciaB)) 1 (NodoB < (HVaciaB) 2 (HVaciaB))))
+2
+\end{verbatim}
+
+\item \texttt{nnAB} - Dado un árbol de tipo ArbolB, determinar el número de nodos que tiene. Las hojas vacías no cuentan.
+\begin{verbatim}
+> (nnAB (HVaciaB))
+0
+> (nnAB (NodoB < (NodoB < (HVaciaB) 3 (HVaciaB)) 1 (NodoB < (HVaciaB) 2 (HVaciaB))))
+3
+\end{verbatim}
+
+\item \texttt{mapAB} - Dado una función de aridad 1 y un árbol de tipo ArbolB, aplicar la función sobre todos los valores de los nodos del árbol (las funciones de aridad 1 sólo regresas números).
+\begin{verbatim}
+> (mapAB add1 (HVaciaB))
+(HVaciaB)
+> (mapAB add1 (NodoB < (HVaciaB) 1 (NodoB < (HVaciaB) 2 (HVaciaB))))
+(NodoB < (HVaciaB) 2 (NodoB < (HVaciaB) 3 (HVaciaB)))
+> (mapAB (lambda (x) (* x x)) (NodoB < (HVaciaB) 3 (NodoB < (HVaciaB) 2 (HVaciaB))))
+(NodoB < (HVaciaB) 9 (NodoB < (HVaciaB) 4 (HVaciaB)))
+\end{verbatim}
+
+\newpage
+\item Ahora, sea \verb;arbol-base;\dots
+\begin{verbatim}
+(define arbol-base (nds (nds (nds vc "A" vc) "B" (nds (nds vc "C" vc) "D" (nds vc "E" vc)))
+                   "F"
+                   (nds vc "G" (nds (nds vc "H" vc) "I" vc))))
+\end{verbatim}
+\begin{enumerate}
+\item  \textbf{preorderAB} - Dado un arbol de tipo ArbolB, regresar una lista de sus elementos recorridos en preorden.
+\begin{verbatim}
+> (preorderAB arbol-base)
+'("F" "B" "A" "D" "C" "E" "G" "I" "H")
+\end{verbatim}
+
+\item  \textbf{inorderAB}  - Dado un arbol de tipo ArbolB, regresar una lista de sus elementos recorridos en inorden.
+\begin{verbatim}
+> (inorderAB arbol-base)
+'("A" "B" "C" "D" "E" "F" "G" "H" "I")
+\end{verbatim}
+
+\item \grade {} \textbf{posorderAB} - Dado un arbol de tipo ArbolB, regresar una lista de sus elementos recorridos en post-orden.
+\begin{verbatim}
+> (posorderAB arbol-base)
+'("A" "C" "E" "D" "B" "H" "I" "G" "F")
+\end{verbatim}
+   
+\end{enumerate}
+
+\jimage{0.8}{imgs/orders.png}
 \end{itemize}
 
 \textbf{Punto extra:} \texttt{in-figure-3D?} - Dados los siguientes tipos de datos:
