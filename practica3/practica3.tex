@@ -6,8 +6,8 @@
   Ayudante teoría: Joshua Emmanuel Mendoza Mendieta\\
   Ayudante laboratorio: Héctor Enrique Gómez Morales}
 \title{Practica 3 - Data Types Parte 2 de 2}
-\date{Fecha de inicio: 13 de febrero de 2015\\
-  \textbf{Fecha de entrega: 27 de febrero de 2015}}
+\date{Fecha de inicio: 20 de febrero de 2015\\
+  \textbf{Fecha de entrega: 6 de marzo de 2015}}
 \begin{document}
 \maketitle
 \section{Instrucciones}
@@ -60,77 +60,14 @@ los siguientes tipos de datos que se te piden.
 > (MArray 4 '(1 2 3))
 (Marray 4 '(1 2 3))
 \end{verbatim}
-
-\newpage
-
-\item $\textbf{List}$ - Definir un tipo de dato recursivo llamado
-  \texttt{MList} que tenga a la lista vacía \texttt{MEmpty} y el
-  constructor de tipo \texttt{MCons}, \textit{i.e.}
-\begin{verbatim}
-> (MEmpty)
-(MEmpty)
-> (MCons 1 (MCons 2 (MCons 3 (MEmpty))))
-(MCons 1 (MCons 2 (MCons 3 (MEmpty))))
-> (MCons 7 (MCons 4 (MCons 10 (MEmpty))))
-(MCons 7 (MCons 4 (MCons 10 (MEmpty))))
-\end{verbatim}
-
-\item $\textbf{NTree}$ - Definir un tipo de dato recursivo llamado
-  \texttt{NTree} que tenga como una hoja nula \texttt{TLEmpty} y un
-  constructor de tipo \texttt{NodeN} (estos árboles son n-ários), \textit{i.e.}
-\begin{verbatim}
-> (TLEmpty)
-(TLEmpty)
-> (NodeN 1 (list (TLEmpty) (TLEmpty) (TLEmpty)))
-(NodeN 1 (list (TLEmpty) (TLEmpty) (TLEmpty)))
-> (NodeN 1 (list (NodeN 2 (list (TLEmpty))) 
-                 (NodeN 3 (list (TLEmpty))) 
-                 (NodeN 4 (list (TLEmpty) (TLEmpty) (TLEmpty)))))
-(NodeN
- 1
- (list
-  (NodeN 2 (list (TLEmpty)))
-  (NodeN 3 (list (TLEmpty)))
-  (NodeN 4 (list (TLEmpty) (TLEmpty) (TLEmpty)))))
-\end{verbatim}
-
-\item $\textbf{Position}$ - Define un tipo de dato llamado
-  \texttt{Position} que tenga un constructor de tipo \texttt{2D-Point}
-  que toma dos números reales que indican una posición
-  en el plano cartesiano, \textit{i.e.}
-\begin{verbatim}
-> (2D-Point 0 0)
-(2D-Point 0 0)
-> (2D-Point 1 (sqrt 2))
-(2D-Point 1 1.4142135623730951)
-\end{verbatim}
-
-\item $\textbf{Figure}$ - Define un tipo de dato llamado
-  \texttt{Figure}
-  que tenga tres constructores:
-  \begin{itemize}
-    \item{\texttt{Circle} - Un constructor que toma un centro dada por un
-      \texttt{Position} y un radio.}
-    \item{\texttt{Square} - Un constructor que toma una posición de la
-      esquina superior izquierda del cuadrado y una longitud.}
-    \item{\texttt{Rectangle} - Un constructor que toma una posición de
-    la esquina superior izquierda del rectángulo, su ancho y su largo.}
-  \end{itemize}
-\begin{verbatim}
-> (Circle (2D-Point 2 2) 2)
-(Circle (2D-Point 2 2) 2)
-> (Square (2D-Point 0 3) 3)
-(Square (2D-Point 0 3) 3)
-> (Rectangle (2D-Point 0 2) 2 3)
-(Rectangle (2D-Point 0 2) 2 3)
-\end{verbatim}
-
+\end{itemize}
 
 \textbf{Sección II. Funciones sobre Datos} Define
 las siguientes funciones que se te piden. Puedes crear y utilizar
 funciones auxiliares. No puedes utilizar funciones de Racket que
 resuelvan \textbf{directamente} los ejercicios.
 
+\begin{itemize}
 \item $\textbf{setvalueA}$ - Dado un arreglo de tipo \texttt{Array},
   una posición y un valor numérico v, regresar otro arreglo con el
   valor v intercambiado en la posición indicada del arreglo original.
@@ -147,59 +84,6 @@ resuelvan \textbf{directamente} los ejercicios.
 (MArray 5 ’(0 0 0 0 4))
 > (setvalueA ar 5 4)
 . . setvalueA: Out of bounds
-\end{verbatim}
-
-\item $\textbf{printML}$ - Dada una lista de tipo \texttt{MList},
-  imprimirla en un formato legible. Puedes utilizar las funciones para
-  manipular strings y la función \texttt{$\sim a$}, \textit{i.e.}
-\begin{verbatim}
-> (printML (MEmpty))
-"[]"
-> (printML (MCons 7 (MEmpty)))
-"[7]"
-> (printML (MCons 7 (MCons 4 (MEmpty))))
-"[7, 4]"
-> (printML (MCons (MCons 1 (MCons 2 (MEmpty))) (MCons 3 (MEmpty))))
-"[[1, 2], 3]"
-\end{verbatim}
-
-\item $\textbf{concatML}$ - Dadas dos listas de tipo \texttt{MList},
-  regresar la concatenación, \textit{i.e.}
-\begin{verbatim}
-> (concatML (MCons 7 (MCons 4 (MEmpty))) (MCons 1 (MEmpty)))
-(MCons 7 (MCons 4 (MCons 1 (MEmpty))))
-> (concatML (MCons 7 (MCons 4 (MEmpty))) (MCons 1 (MCons 10 (MEmpty))))
-(MCons 7 (MCons 4 (MCons 1 (MCons 10 (MEmpty)))))
-\end{verbatim}
-
-\item $\textbf{lengthML}$ - Dada una lista de tipo MLista, regresar la
-  cantidad de elementos que tiene, \textit{i.e.}
-\begin{verbatim}
-> (lengthML (MEmpty))
-0
-> (lengthML (MCons 7 (MCons 4 (MEmpty))))
-2
-\end{verbatim}
-
-\item $\textbf{area}$ - Dada una figura del tipo \texttt{Figure},
-  regresar el área de la figura, \textit{i.e.}
-\begin{verbatim}
-> (area (Circle (2D-Point 5 5) 4))
-50.26548245743669
-> (area (Square (2D-Point 0 0) 20))
-400
-> (area (Rectangle (2D-Point 3 4) 5 10))
-50
-\end{verbatim}
-
-\item $\textbf{in-figure?}$ - Dada una figura \texttt{fig} del tipo \texttt{Figure}
-  y una posición \texttt{p} del tipo \texttt{2D-Point} regresa \#t si \texttt{p} esta
-  dentro de \texttt{fig} y \#f en caso contrario, \textit{i.e.}
-\begin{verbatim}
-> (in-figure? (Square (2D-Point 5 5) 4) (2D-Point 6 6))
-#t
-> (in-figure? (Rectangle (2D-Point 5 5) 4 6) (2D-Point 4 4))
-#f
 \end{verbatim}
 
 \end{itemize}
