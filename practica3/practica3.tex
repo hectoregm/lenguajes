@@ -24,12 +24,12 @@
 \begin{document}
 \maketitle
 \section{Instrucciones}
-En esta práctica se tienen doce ejercicios, los primeros once son
+En esta práctica se tienen diez ejercicios, los primeros nueve son
 obligatorios siendo solamente el ultimo opcional con valor de un
 punto extra. Por lo tanto la calificación máxima que se puede obtener en
 esta práctica es 11.
 
-Esta practica se puede entregar en equipos de a lo máximo dos
+Esta practica se puede entregar en equipos de a lo máximo tres
 personas, pero se recomienda que esta practica la hagan de forma
 individual.
 
@@ -41,37 +41,87 @@ practica 1 y funciones auxiliares que ustedes definan.
 
 Todos los ejercicios requieren contar con pruebas mediante el uso de
 la función \texttt{test}:
-\begin{verbatim}
-(test <result-expr> <expected-expr>)
-\end{verbatim}
 
-En donde \textit{result-expr} es la expresión que se evalúa a cierto
-valor que es comparado con \textit{expected-expr} que es otra
-expresión que evalúa al valor esperado. Si las dos expresiones evalúan
-a lo mismo la prueba imprime el éxito de la prueba, en caso contrario
-indicar un error.
-
-\begin{verbatim}
-> (test (+ 1 2) 3)
-(good (+ 1 2) 3 3 "at line 34")
-
-> (test (+ 1 2) 4)
-(bad (+ 1 2) 3 4 "at line 36")
-\end{verbatim}
-
-Cada ejercicio debe contar al menos con cinco pruebas.
+\textbf{Cada ejercicio debe contar al menos con cinco pruebas.}
 
 \section{Ejercicios}
-\textbf{Sección I. Tipos de datos recursivos y no recursivos} Define
-los siguientes tipos de datos que se te piden.
+\textbf{Sección I. Heart Rate Zones} Para las siguientes funciones, se utilizaran los siguientes tipos de datos:
+\begin{verbatim}
+(define-type HRZ
+  [resting (low number?)
+           (high number?)]
+  [warm-up (low number?)
+           (high number?)]
+  [fat-burning (low number?)
+               (high number?)]
+  [aerobic (low number?)
+           (high number?)]
+  [anaerobic (low number?)
+             (high number?)]
+  [maximum (low number?)
+           (high number?)])
+
+(define-type Time
+  [delta (distance number?)
+         (lhr number?)
+         (hhr number?)
+         (zone HRZ?)
+         (time number?)])
+\end{verbatim}
+
+El tipo de dato \verb;HRZ; representa las zonas de frecuencia cardiaca,
+cada zona tiene como parametros en su constructor el minimo y maximo ritmo cardiaco
+de la zona correspondiente.
+
+El tipo de dato \verb;Time; representa un intervalo de tiempo, se tiene el constructor del tipo \verb;delta; que toma una distancia recorrida, el minimo y maximo ritmo cardiaco, la zona de frecuencia cardiaca y el tiempo total del intervalo.
 
 \begin{itemize}
-\item $\textbf{Array}$ - Definir un tipo de dato \texttt{Array}
-  que tenga un constructor de tipo \texttt{MArray}. El entero sirve
-  para definir el tamaño del arreglo., \textit{i.e.}
+\item $\textbf{zones}$ - Dado el ritmo cardiaco de descanso y el maximo ritmo cardiaco de una persona se debe regresar la lista de zonas de frecuencia cardiaca. La formula utilizada comunmente es $zone i = rest + (max - rest) * (0.5 + (0.1*i)) (Low Bound)$, donde i = $1..4$, \textit{i.e.}
+
 \begin{verbatim}
-> (MArray 4 '(1 2 3))
-(Marray 4 '(1 2 3))
+> (zones 50 180)
+(list
+ (resting 50 114.0)
+ (warm-up 115.0 127.0)
+ (fat-burning 128.0 140.0)
+ (aerobic 141.0 153.0)
+ (anaerobic 154.0 166.0)
+ (maximum 167.0 180))
+\end{verbatim}
+
+Para los siguientes ejemplos se define:
+\begin{verbatim}
+> (define my-zones (zones 50 180))
+\end{verbatim}
+
+\item $\textbf{get-zones}$ - Dado un simbolo que es el nombre de una zona y una lista de zonas regresar el tipo de dato correspondiente, \textit{i.e.}
+\begin{verbatim}
+> (get-zone 'anaerobic my-zones)
+(anaerobic 154.0 166.0)
+> (get-zone 'maximum my-zones)
+(maximum 167.0 180)
+\end{verbatim}
+
+\item $\textbf{bpm->zone}$ - Dado una lista de frecuencias cardiacas y una lista de zonas de frecuencia cardiaca regresar una lista de zonas por cada frecuencia cardiaca en la lista original, \textit{i.e.}
+\begin{verbatim}
+> (bpm->zone empty my-zones)
+'()
+> (bpm->zone '(50 60) my-zones) 
+(list (resting 50 114.0) (resting 50 114.0))
+> (bpm->zone '(140 141) my-zones) 
+(list (fat-burning 128.0 140.0) (aerobic 141.0 153.0))
+\end{verbatim}
+
+\item $\textbf{collect-deltas}$ - Dado una lista de deltas, obtener una nueva lista en que se agrupen las deltas consecutivas que compartan la misma zona. Al agruparse se suman las distancias y tiempos, mientras que se toman los minimos y maximos de las frecuencias cardiacas del grupo, \textit{i.e.}
+\begin{verbatim}
+> (collect-deltas (list (delta 10 132 138 mfat 5) 
+                        (delta 10 136 139 mfat 8)))
+(list (delta 20 132 139 (fat-burning 128.0 140.0) 13))
+> (collect-deltas (list (delta 13 134 138 mfat 5) 
+                        (delta 14 136 138 mfat 5)
+                        (delta 17 140 141 maero 5)
+                        (delta 17 140 141 maero 5)))
+(list (delta 27 134 138 (fat-burning 128.0 140.0) 10) (delta 34 140 141 (aerobic 141.0 153.0) 10))
 \end{verbatim}
 \end{itemize}
 
@@ -97,69 +147,70 @@ En esta práctica utilizaremos abreviaciones para los constructores de tipos:
 \item \verb;(bns ebt ``hello'' ebt); es lo mismo que \verb;(BNode string<? (EmptyBT) ``hello'' (EmptyBT));
 \end{enumerate}
 
-Por último, cuentas con la función \verb;printAB; que recibe un árbol de tipo BTree y regresa su representación gráfica, para que puedas depurar tu código: \\
+Por último, cuentas con la función \verb;printBT; que recibe un árbol de tipo BTree y regresa su representación gráfica, para que puedas depurar tu código: \\
 
-\jimage{0.9}{imgs/printab1.png}
+\jimage{0.9}{imgs/printbt1.png}
 
 \newpage
 \begin{itemize}
-\item \texttt{nniAB} - Dado un árbol de tipo ArbolB, determinar el número de nodos internos que tiene.
+\item \texttt{ninBT} - Dado un árbol de tipo \verb;BTree;, determinar el número de nodos internos que tiene.
 \begin{verbatim}
-> (nniAB (HVaciaB))
+> (ninBT (EmptyBT))
 0
-> (nniAB (NodoB < (NodoB < (HVaciaB) 3 (HVaciaB)) 1 (NodoB < (HVaciaB) 2 (HVaciaB))))
+> (ninBT (BNode < (BNode < (EmptyBT) 3 (EmptyBT)) 1 (BNode < (EmptyBT) 2 (EmptyBT))))
 1
 \end{verbatim}
 
-\item \texttt{nhAB} - Dado un árbol de tipo ArbolB, determinar el número de hojas no vacías.
+\item \texttt{nlBT} - Dado un árbol de tipo \verb;BTree;, determinar el número de hojas no vacías.
 \begin{verbatim}
-> (nhAB (HVaciaB))
+> (nlBT (EmptyBT))
 0
-> (nhAB (NodoB < (NodoB < (HVaciaB) 3 (HVaciaB)) 1 (NodoB < (HVaciaB) 2 (HVaciaB))))
+> (nlBT (BNode < (Bnode < (EmptyBT) 3 (EmptyBT)) 1 (BNode < (EmptyBT) 2 (EmptyBT))))
 2
 \end{verbatim}
 
-\item \texttt{nnAB} - Dado un árbol de tipo ArbolB, determinar el número de nodos que tiene. Las hojas vacías no cuentan.
+\item \texttt{nnBT} - Dado un árbol de tipo ArbolB, determinar el número de nodos que tiene. Las hojas vacías no cuentan.
 \begin{verbatim}
-> (nnAB (HVaciaB))
+> (nnAB (EmptyBT))
 0
-> (nnAB (NodoB < (NodoB < (HVaciaB) 3 (HVaciaB)) 1 (NodoB < (HVaciaB) 2 (HVaciaB))))
+> (nnAB (BNode < (BNode < (EmptyBT) 3 (EmptyBT)) 1 (Bnode < (EmptyBT) 2 (EmptyBT))))
 3
 \end{verbatim}
 
-\item \texttt{mapAB} - Dado una función de aridad 1 y un árbol de tipo ArbolB, aplicar la función sobre todos los valores de los nodos del árbol (las funciones de aridad 1 sólo regresas números).
+\item \texttt{mapBT} - Dado una función de aridad 1 y un árbol de tipo ArbolB, aplicar la función sobre todos los valores de los nodos del árbol (las funciones de aridad 1 sólo regresas números).
 \begin{verbatim}
-> (mapAB add1 (HVaciaB))
-(HVaciaB)
-> (mapAB add1 (NodoB < (HVaciaB) 1 (NodoB < (HVaciaB) 2 (HVaciaB))))
-(NodoB < (HVaciaB) 2 (NodoB < (HVaciaB) 3 (HVaciaB)))
-> (mapAB (lambda (x) (* x x)) (NodoB < (HVaciaB) 3 (NodoB < (HVaciaB) 2 (HVaciaB))))
-(NodoB < (HVaciaB) 9 (NodoB < (HVaciaB) 4 (HVaciaB)))
+> (mapBT add1 (EmptyBT))
+(EmptyBT)
+> (mapBT add1 (BNode < (EmptyBT) 1 (BNode < (EmptyBT) 2 (EmptyBT))))
+(BNode < (EmptyBT) 2 (BNode < (EmptyBT) 3 (EmptyBT)))
+> (mapAB (lambda (x) (* x x)) (BNode < (EmptyBT) 3 (BNode < (EmptyBT) 2 (EmptyBT))))
+(BNode < (EmptyBT) 9 (BNode < (EmptyBT) 4 (EmptyBT)))
 \end{verbatim}
 
 \newpage
 \item Ahora, sea \verb;arbol-base;\dots
 \begin{verbatim}
-(define arbol-base (nds (nds (nds vc "A" vc) "B" (nds (nds vc "C" vc) "D" (nds vc "E" vc)))
-                   "F"
-                   (nds vc "G" (nds (nds vc "H" vc) "I" vc))))
+(define arbol-base (bns (bns (bns ebt "A" ebt) "B" (bns (bns ebt "C" ebt) "D" (bns ebt "E" ebt))) 
+                        "F"
+                        (bns ebt "G" (bns (bns ebt "H" ebt) "I" ebt))))
 \end{verbatim}
+
 \begin{enumerate}
-\item  \textbf{preorderAB} - Dado un arbol de tipo ArbolB, regresar una lista de sus elementos recorridos en preorden.
+\item  \textbf{preorderBT} - Dado un arbol de tipo BTree, regresar una lista de sus elementos recorridos en preorden.
 \begin{verbatim}
-> (preorderAB arbol-base)
+> (preorderBT arbol-base)
 '("F" "B" "A" "D" "C" "E" "G" "I" "H")
 \end{verbatim}
 
-\item  \textbf{inorderAB}  - Dado un arbol de tipo ArbolB, regresar una lista de sus elementos recorridos en inorden.
+\item  \textbf{inorderBT}  - Dado un arbol de tipo BTree, regresar una lista de sus elementos recorridos en inorden.
 \begin{verbatim}
-> (inorderAB arbol-base)
+> (inorderBT arbol-base)
 '("A" "B" "C" "D" "E" "F" "G" "H" "I")
 \end{verbatim}
 
-\item \grade {} \textbf{posorderAB} - Dado un arbol de tipo ArbolB, regresar una lista de sus elementos recorridos en post-orden.
+\item \grade {} \textbf{posorderBT} - Dado un arbol de tipo BTree, regresar una lista de sus elementos recorridos en post-orden.
 \begin{verbatim}
-> (posorderAB arbol-base)
+> (posorderBT arbol-base)
 '("A" "C" "E" "D" "B" "H" "I" "G" "F")
 \end{verbatim}
    
@@ -168,10 +219,10 @@ Por último, cuentas con la función \verb;printAB; que recibe un árbol de tipo
 \jimage{0.8}{imgs/orders.png}
 \end{itemize}
 
-\textbf{Punto extra:} \texttt{in-figure-3D?} - Dados los siguientes tipos de datos:
-\begin{itemize}
-\item{ \texttt{3D-Point} que define un punto en 3D.}
-\item{\texttt{Figure3D} que define una figura en 3D que tenga al menos tres variantes (por ejemplo: Sphere, Cube)}.
-\end{itemize}
-Entonces se debe implementar \texttt{in-figure-3D?} que tome una figura \texttt{fig} del tipo \texttt{Figure3D} y una posición \texttt{p} del tipo \texttt{3D-Point} entonces regresa \#t si \texttt{p} esta dentro de \texttt{fig} y \#f en caso contrario
+%% \textbf{Punto extra:} \texttt{in-figure-3D?} - Dados los siguientes tipos de datos:
+%% \begin{itemize}
+%% \item{ \texttt{3D-Point} que define un punto en 3D.}
+%% \item{\texttt{Figure3D} que define una figura en 3D que tenga al menos tres variantes (por ejemplo: Sphere, Cube)}.
+%% \end{itemize}
+%% Entonces se debe implementar \texttt{in-figure-3D?} que tome una figura \texttt{fig} del tipo \texttt{Figure3D} y una posición \texttt{p} del tipo \texttt{3D-Point} entonces regresa \#t si \texttt{p} esta dentro de \texttt{fig} y \#f en caso contrario
 \end{document}

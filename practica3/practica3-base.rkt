@@ -6,6 +6,29 @@
 ;
 (define (any? x) #t)
 
+
+;; Tipo de datos seccion I
+(define-type HRZ
+  [resting (low number?)
+           (high number?)]
+  [warm-up (low number?)
+           (high number?)]
+  [fat-burning (low number?)
+               (high number?)]
+  [aerobic (low number?)
+           (high number?)]
+  [anaerobic (low number?)
+             (high number?)]
+  [maximum (low number?)
+           (high number?)])
+
+(define-type Time
+  [delta (distance number?)
+         (lhr number?)
+         (hhr number?)
+         (zone HRZ?)
+         (time number?)])
+
 ;; BTree - Tipo de dato
 ;
 (define-type  BTree
@@ -69,8 +92,8 @@
 ;; Arbol base Wikipedia
 ;
 (define arbol-base (bns (bns (bns ebt "A" ebt) "B" (bns (bns ebt "C" ebt) "D" (bns ebt "E" ebt))) 
-                "F"
-                (bns ebt "G" (bns (bns ebt "H" ebt) "I" ebt))))
+                        "F"
+                        (bns ebt "G" (bns (bns ebt "H" ebt) "I" ebt))))
 
 ;; Funciones auxiliares
 ;
@@ -97,18 +120,18 @@
       nothing
       (beside (a-label (car l)) (print-list (cdr l)))))
 
-(define (printAB-complete arb level)
+(define (printBT-complete arb level)
   (type-case BTree arb
-    [EmptyBT () (if (zero? level) nothing (above white-circle (beside (printAB-complete arb (sub1 level)) 
-                                                                     (printAB-complete arb (sub1 level)))))]
+    [EmptyBT () (if (zero? level) nothing (above white-circle (beside (printBT-complete arb (sub1 level)) 
+                                                                     (printBT-complete arb (sub1 level)))))]
     [BNode (c l v r) (if (zero? level) 
                        (a-label v)
                        (let* ((lblack (line (* 15 (expt 2 (- level 2))) -30 "black"))
                               (rblack (line (* -15 (expt 2 (- level 2))) -30 "black"))
                               (lwhite (line (* 15 (expt 2 (- level 2))) -30 "white"))
                               (rwhite (line (* -15 (expt 2 (- level 2))) -30 "white"))
-                              (d (above (a-label v) (beside (printAB-complete l (sub1 level))
-                                                             (printAB-complete r (sub1 level))))))
+                              (d (above (a-label v) (beside (printBT-complete l (sub1 level))
+                                                             (printBT-complete r (sub1 level))))))
                          (cond 
                            ((and (EmptyBT? l) (EmptyBT? r)) d)
                            ((EmptyBT? l) (underlay/align/offset "middle" "top" (beside lwhite rblack) 0 -15 d))
@@ -117,15 +140,16 @@
 
 ;; Imprime la representación gráfica de un BTree
 ;
-(define (printAB arb)
-  (printAB-complete arb (heightAB arb)))
+(define (printBT arb)
+  (printBT-complete arb (heightAB arb)))
 
 ;; Murales de árboles de números
 ;
-(define arb-drawings (map printAB arb-list))
+(define arb-drawings (map printBT arb-list))
 (define arb-mural (apply beside arb-drawings))
 
 ;; Murales de árboles de strings
 ;
-(define arbs-drawings (map printAB arbs-list))
+(define arbs-drawings (map printBT arbs-list))
 (define arbs-mural (apply beside arbs-drawings))
+
