@@ -2,6 +2,8 @@
 
 (require 2htdp/image)
 
+(print-only-errors false)
+
 ;; any? Dado cualquier valor x, regresa #t
 ;
 (define (any? x) #t)
@@ -152,4 +154,3 @@
 ;
 (define arbs-drawings (map printBT arbs-list))
 (define arbs-mural (apply beside arbs-drawings))
-
