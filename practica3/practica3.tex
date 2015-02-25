@@ -167,7 +167,7 @@ Por último, cuentas con la función \verb;printBT; que recibe un árbol de tipo
 2
 \end{verbatim}
 
-\item \texttt{nnBT} - Dado un árbol de tipo ArbolB, determinar el número de nodos que tiene. Las hojas vacías no cuentan.
+\item \texttt{nnBT} - Dado un árbol de tipo \verb;BTree;, determinar el número de nodos que tiene. Las hojas vacías no cuentan.
 \begin{verbatim}
 > (nnBT (EmptyBT))
 0
@@ -175,7 +175,7 @@ Por último, cuentas con la función \verb;printBT; que recibe un árbol de tipo
 3
 \end{verbatim}
 
-\item \texttt{mapBT} - Dado una función de aridad 1 y un árbol de tipo ArbolB, aplicar la función sobre todos los valores de los nodos del árbol (las funciones de aridad 1 sólo regresas números).
+\item \texttt{mapBT} - Dado una función de aridad 1 y un árbol de tipo \verb;BTree;, aplicar la función sobre todos los valores de los nodos del árbol (las funciones de aridad 1 sólo regresas números).
 \begin{verbatim}
 > (mapBT add1 (EmptyBT))
 (EmptyBT)
