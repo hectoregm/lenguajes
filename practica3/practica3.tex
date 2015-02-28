@@ -72,9 +72,12 @@ El tipo de dato \verb;Time; representa un intervalo de tiempo, se tiene el const
 
 \begin{itemize}
 \item $\textbf{zones}$ - Dado el ritmo cardiaco de descanso y el máximo ritmo cardiaco de una persona se debe regresar la lista de zonas de frecuencia cardiaca. La formula utilizada comúnmente es:\\
-  $zone\ i = rest + (max - rest) * (0.5 + (0.1*i))\ (Low\ Bound)$\\
-  $zone\ i = rest + (max - rest) * (0.5 + (0.1*(i+1))) - 1\ (Upper\ Bound)$,\\
-  donde i = $1..4$, \textit{i.e.}
+  $range = max - rest$\\
+  $zone\ 0\ (resting) = rest (Low\ Bound)$\\
+  $zone\ 0\ (resting) = (range * 0.5) - 1 (Upper\ Bound)$\\
+  $zone\ (i+1) = rest + range * (0.5 + (0.1 * i))\ (Low\ Bound)$\\
+  $zone\ (i+1) = rest + range * (0.5 + (0.1 * (i+1))) - 1\ (Upper\ Bound)$,\\
+  donde i = $0..4$, \textit{i.e.}
 
 \begin{verbatim}
 > (zones 50 180)
@@ -117,9 +120,9 @@ Para los siguientes ejemplos se define:
 (list (delta 20 132 139 (fat-burning 128.0 140.0) 13))
 > (collect-deltas (list (delta 13 134 138 mfat 5) 
                         (delta 14 136 138 mfat 5)
-                        (delta 17 140 141 maero 5)
-                        (delta 17 140 141 maero 5)))
-(list (delta 27 134 138 (fat-burning 128.0 140.0) 10) (delta 34 140 141 (aerobic 141.0 153.0) 10))
+                        (delta 17 141 142 maero 5)
+                        (delta 17 141 143 maero 5)))
+(list (delta 27 134 138 (fat-burning 128.0 140.0) 10) (delta 34 141 143 (aerobic 141.0 153.0) 10))
 \end{verbatim}
 \end{itemize}
 
@@ -145,7 +148,7 @@ En esta práctica utilizaremos abreviaciones para los constructores de tipos:
 \item \verb;(bns ebt ``hello'' ebt); es lo mismo que \verb;(BNode string<? (EmptyBT) ``hello'' (EmptyBT));
 \end{enumerate}
 
-Por último, cuentas con la función \verb;printBT; que recibe un árbol de tipo BTree y regresa su representación gráfica, para que puedas depurar tu código: \\
+Por último, cuentas con la función \verb;printBT; que recibe un árbol de tipo \verb;BTree; y regresa su representación gráfica, para que puedas depurar tu código: \\
 
 \jimage{0.9}{imgs/printbt1.png}
 
@@ -196,19 +199,19 @@ Ahora, sea \verb;arbol-base;\dots
 \end{verbatim}
 
 \begin{enumerate}
-\item  \textbf{preorderBT} - Dado un árbol de tipo BTree, regresar una lista de sus elementos recorridos en preorden.
+\item  \textbf{preorderBT} - Dado un árbol de tipo \verb;BTree;, regresar una lista de sus elementos recorridos en preorden.
 \begin{verbatim}
 > (preorderBT arbol-base)
 '("F" "B" "A" "D" "C" "E" "G" "I" "H")
 \end{verbatim}
 
-\item  \textbf{inorderBT}  - Dado un árbol de tipo BTree, regresar una lista de sus elementos recorridos en inorden.
+\item  \textbf{inorderBT}  - Dado un árbol de tipo \verb;BTree;, regresar una lista de sus elementos recorridos en inorden.
 \begin{verbatim}
 > (inorderBT arbol-base)
 '("A" "B" "C" "D" "E" "F" "G" "H" "I")
 \end{verbatim}
 
-\item \textbf{posorderBT} - Dado un árbol de tipo BTree, regresar una lista de sus elementos recorridos en post-orden.
+\item \textbf{posorderBT} - Dado un árbol de tipo \verb;BTree;, regresar una lista de sus elementos recorridos en post-orden.
 \begin{verbatim}
 > (posorderBT arbol-base)
 '("A" "C" "E" "D" "B" "H" "I" "G" "F")
