@@ -20,12 +20,12 @@
   [num (n number?)]
   [id (name symbol?)]
   [fun (params (listof symbol?))
-       (body FAES?)]
-  [app (fun FAES?)
-       (args (listof FAES?))]
+       (body FAE?)]
+  [app (fun FAE?)
+       (args (listof FAE?))]
   [binop (f procedure?)
-         (l FAES?)
-         (r FAES?)])
+         (l FAE?)
+         (r FAE?)])
 
 (define-type FAE-Value
   [numV (n number?)]
