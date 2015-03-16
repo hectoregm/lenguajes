@@ -4,6 +4,15 @@
 
 (print-only-errors true)
 
+;; lookup : symbol Env -> FAE-Value
+(define (lookup name env)
+  (type-case Env env
+    [mtSub () (error 'lookup "no binding for identifier")]
+    [aSub (bound-name bound-value env)
+          (if (symbol=? bound-name name)
+              bound-value
+              (lookup name env))]))
+
 (define (desugar expr)
   (type-case FAES expr
     [numS (n) (num n)]
@@ -24,9 +33,30 @@
 (define (cparse sexp)
   (desugar (parse sexp)))
 
+(define (apply-binop fun numa numb)
+  (numV (fun (numV-n numa)
+             (numV-n numb))))
+
+(define (extend-env params args env)
+  (cond
+    [(empty? params) env]
+    [else (aSub (car params)
+                (car args)
+                (extend-env (cdr params) (cdr args) env))]))
+
 (define (interp expr env)
-  ;; Implementar interp
-  (error 'interp "Not implemented"))
+  (type-case FAE expr
+    [num (n) (numV n)]
+    [id (v) (lookup v env)]
+    [fun (params bound-body)
+         (closureV params bound-body env)]
+    [app (fun-expr args)
+         (local ([define fun-val (interp fun-expr env)])
+           (interp (closureV-body fun-val)
+                   (extend-env (closureV-param fun-val)
+                               (map (lambda (arg) (interp arg env)) args)
+                               (closureV-env fun-val))))]
+    [binop (f l r) (apply-binop f (interp l env) (interp r env))]))
 
 (define (rinterp expr)
   (interp expr (mtSub)))
@@ -47,6 +77,5 @@
 (test (rinterp (cparse '{{{fun {x} x} {fun {x} {+ x 5}}} 3})) (numV 8))
 (test (rinterp (cparse '{with {{x 3}} {fun {y} {+ x y}}})) (closureV '(y) (binop + (id 'x) (id 'y)) (aSub 'x (numV 3) (mtSub))))
 (test (rinterp (cparse '{with {{x 10}} {{fun {y} {+ y x}} {+ 5 x}}})) (numV 25))
-
 (test (rinterp (cparse '{with {{x 1} {y 2} {z 3}} {+ {+ x y} z}})) (numV 6))
 (test (rinterp (cparse '{{fun {x y z} {+ {+ x y} z}} 1 2 3})) (numV 6))
