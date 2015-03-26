@@ -1,0 +1,121 @@
+\documentclass{article}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm,letterpaper]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{verbatim, array}
+\usepackage{hyperref}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+
+\newcommand{\gradeone}{(\textbf{1pt}) }
+\newcommand{\grade}[1]{(\textbf{#1pts}) }
+\newcommand{\jimage}[2]{\includegraphics[width=#1\textwidth]{#2}\vskip10pt}
+\newcommand{\jcimage}[2]{\begin{center}\includegraphics[width=#1\textwidth]{#2}\end{center}\vskip10pt}
+
+\author{Profesora: Karla Ramírez Pulido \and
+  Ayudante teoría: Joshua Emmanuel Mendoza Mendieta \and
+  Ayudante laboratorio: Héctor Enrique Gómez Morales}
+\title{Practica 5 - Interprete RCFAE}
+\date{Fecha de inicio: 28 de marzo de 2015\\
+  \textbf{Fecha de entrega: 25 de abril de 2015}}
+\begin{document}
+\maketitle
+\section{Instrucciones}
+
+Para esta práctica, requerirás tomar como base el interprete de la practica anterior e implementar las características que se solicitan.
+
+El objetivo de esta práctica es hacer un intérprete del lenguaje \texttt{RCFAE} (Recursive, Conditional, Function, Arithmetic Expression) con \emph{cajas}.
+
+Se tendrán dos sintaxis, la primera \texttt{RCFAES} es una sintaxis que se define explícitamente las expresiones \texttt{with}, y la sintaxis \texttt{RCFAE}.
+
+En la anterior practica vimos que usar la aplicación de funciones para implementar la funcionalidad del \texttt{with}.
+
+\begin{itemize}
+\item \textbf{Recursive} El intérprete de nuestro lenguaje debe poder evaluar correctamente variables con expresiones que hacen autorreferencia en el mismo ambiente por medio de \emph{cajas}.
+\item \textbf{Conditional} El intérprete evaluara correctamente el control de flujo \texttt{if} que toma expresiones que se evalúan a booleanos.
+\item \textbf{FAE} El intérprete debe evaluar correctamente expresiones de la práctica pasada como son funciones, aplicaciones y operaciones binarias predefinidas así como su extensión a operaciones unarias predefinidas y la inclusión de valores booleanos.
+\end{itemize}
+
+
+\begin{tabular}{c c}
+  \begin{minipage}[t]{10cm}
+\begin{verbatim}
+<RCFAE>::= <id>
+          | <num>
+          | <bool>
+          | <MLista>
+          | {with {{<id> <RCFAE>}+} <RCFAE>}
+          | {rec {{<id> <RCFAE>}+} <RCFAE>}
+          | {fun {<id>*} <RCFAE>}
+          | {if <RCFAE> <RCFAE> <RCFAE>}
+          | {equal? <RCFAE> <RCFAE>}
+          | {<op> <RCFAE>}
+          | {<binop> <RCFAE> <RCFAE>}
+          | {<RCFAE> <RCFAE>*}
+
+<id>::= a|...|z|A|...|Z|aa|ab|...|aaa|...
+        (Cualquier combinación de caracteres alfanuméricos
+         con al menos uno alfabético)
+
+<num>::= ...|-2|-1|0|1|2|...
+
+<bool>::= true | false
+
+\end{verbatim}
+  \end{minipage}
+  &
+  \begin{minipage}[t]{6cm}
+\begin{verbatim}
+   <op>::= inc
+         | dec
+         | zero?
+         | num?
+         | neg
+         | bool?
+
+<binop>::= +
+         | -
+         | *
+         | /
+         | <
+         | >
+         | <=
+         | >=
+         | and
+         | or
+
+\end{verbatim}
+  \end{minipage}
+\end{tabular}
+
+Esta práctica se puede entregar en equipos de a lo más tres
+personas.
+
+Esta práctica debe ser implementada con la variante plai, es decir
+su archivo rkt debe tener como primer linea lo siguiente:
+\texttt{\#lang plai}.
+
+Todos los ejercicios requieren contar con pruebas mediante el uso de
+la función \texttt{test}.
+
+\section{Ejercicios}
+
+\begin{enumerate}
+
+\item \grade{1} \textbf{Booleanos} Agrega al tipo RCFAE y RCFAE-Value la variante booleana. Esto es que en sintaxis concreta puedas reconocer símbolos \texttt{true} y \texttt{false} y al momento de procesar la lista de símbolos de una expresión que los incluya con \emph{parse}, en el árbol de sintaxis abstracta los manejes por medio de la variante de tipo \texttt{bool} (análogo a \texttt{num}), adicional a la variante \texttt{boolV} para el intérprete. \\
+
+\item \grade{1} \textbf{if} Agrega al parser y al intérprete la variante \texttt{if}, que recibe tres argumentos que son expresiones RCFAE. Al interpretarse, si la evaluación del primer argumento es \texttt{(boolV \#t)}, la evaluación del \texttt{if} es de la evaluación de la primera expresión RCFAE recibida. En caso de que sea \texttt{(boolV \#f)}, la evaluación del \texttt{if} es la evaluación de la segunda expresión RCFAE recibida. \\
+
+\item \grade{1} \textbf{equal?} Agrega al parser y al intérprete la variante \texttt{equal?}, que recibe dos expresiones RCFAE. Si las dos expresiones son \texttt{numV}, compara si son los mismos números regresando \texttt{(boolV \#t)} o \texttt{(boolV \#f)} según sea el caso. Si son expresiones booleanas, sólo si son iguales valores \texttt{boolV}. Cualquier otro caso de uso de \texttt{isequal?} no es válido y debes regresar un mensaje de error que diga ``La aplicación de equal? no es adecuada''. En tu README explica qué inconvenientes tendría implementar \textbf{equal?} como parte de la variante de tipo \texttt{binop}. \\
+
+\item \grade{1} \textbf{op, binop} Terminar de implementar todas las operaciones unarias y binarias indicadas en la definición de la sintaxis de RCFAE. \\
+
+\item \grade{4} \textbf{RCFAE} Implementar los ambientes recursivos por medio de cajas para la variante de tipo \emph{rec} \\
+
+\item \grade{2} \textbf{Procedurales} Implementar los ambientes recursivos por medio de \emph{procedimientos} para la variante de tipo \emph{rec} \\
+
+\end{enumerate}
+
+\end{document}
