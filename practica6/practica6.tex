@@ -18,102 +18,147 @@
   Ayudante teoría: Joshua Emmanuel Mendoza Mendieta \and
   Ayudante laboratorio: Héctor Enrique Gómez Morales}
 \title{Practica 6 - Programacion Orientada a Objetos}
-\date{Fecha de inicio: 28 de marzo de 2015\\
-  \textbf{Fecha de entrega: 25 de abril de 2015}}
+\date{Fecha de inicio: 22 de mayo de 2015\\
+  \textbf{Fecha de entrega: 12 de junio de 2015}}
 \begin{document}
 \maketitle
 \section{Instrucciones}
 
-Para esta práctica, requerirás tomar como base el interprete de la practica anterior e implementar las características que se solicitan.
-
-El objetivo de esta práctica es hacer un intérprete del lenguaje \texttt{RCFAE} (Recursive, Conditional, Function, Arithmetic Expression) con \emph{cajas}.
-
-Se tendrán dos sintaxis, la primera \texttt{RCFAES} es una sintaxis que se define explícitamente las expresiones \texttt{with}, y la sintaxis \texttt{RCFAE}.
-
-En la anterior practica vimos que usar la aplicación de funciones para implementar la funcionalidad del \texttt{with}.
-
-\begin{itemize}
-\item \textbf{Recursive} El intérprete de nuestro lenguaje debe poder evaluar correctamente variables con expresiones que hacen autorreferencia en el mismo ambiente por medio de \emph{cajas}.
-\item \textbf{Conditional} El intérprete evaluara correctamente el control de flujo \texttt{if} que toma expresiones que se evalúan a booleanos.
-\item \textbf{FAE} El intérprete debe evaluar correctamente expresiones de la práctica pasada como son funciones, aplicaciones y operaciones binarias predefinidas así como su extensión a operaciones unarias predefinidas y la inclusión de valores booleanos.
-\end{itemize}
+Una grafica es un par ordenado $G = (V, E)$ compuesto de un conjunto $V$ de vertices y un conjunto $E$ de aristas.
+En esta practica la grafica se puede representar en tres tipos de formatos.
 
 
-\begin{tabular}{c c}
-  \begin{minipage}[t]{10cm}
+\textbf{Formato CSV:} En el primer renglon se indica si la grafica es dirigida (direct=1) o no (direct=0).
+En cada renglon subsecuente se define una arista de la grafica, las dos primeras columnas indican
+el vertice origen y el vertice destino de la arista. La tercera columna indica el peso de la arista.
+
 \begin{verbatim}
-<RCFAE>::= <id>
-          | <num>
-          | <bool>
-          | {with {{<id> <RCFAE>}+} <RCFAE>}
-          | {rec {{<id> <RCFAE>}+} <RCFAE>}
-          | {fun {<id>*} <RCFAE>}
-          | {if <RCFAE> <RCFAE> <RCFAE>}
-          | {equal? <RCFAE> <RCFAE>}
-          | {<op> <RCFAE>}
-          | {<binop> <RCFAE> <RCFAE>}
-          | {<RCFAE> <RCFAE>*}
-
-<id>::= a|...|z|A|...|Z|aa|ab|...|aaa|...
-        (Cualquier combinación de caracteres alfanuméricos
-         con al menos uno alfabético)
-
-<num>::= ...|-2|-1|0|1|2|...
-
-<bool>::= true | false
-
+direct=0
+"a", "b", 11
+"a", "e", 1
+"a", "f", 4
+"b", "c", 8
+"b", "g", 8
+"c", "d", 3
+"c", "h", 3
+"d", "e", 3 
+"d", "i", 2
+"e", "j", 1
+"f", "h", 9
+"f", "i", 7
+"g", "i", 4
+"g", "j", 1
+"h", "j", 9
 \end{verbatim}
-  \end{minipage}
-  &
-  \begin{minipage}[t]{6cm}
+
+
+\textbf{Formato JSON:} Es el formato mas popular para el intercambio de informacion en Web. se tienen tres llaves: direct, vertices y edges. La primera direct indica con un entero si la grafica es dirigida (direct: 1) o si es no dirigida (direct: 0). En la llave vertices se tiene un arreglo con los todos los vertices de la grafica, finalmente en la
+llave edges se tiene un arreglo con las aristas de la grafica. 
+
 \begin{verbatim}
-   <op>::= inc
-         | dec
-         | zero?
-         | num?
-         | neg
-         | bool?
-
-<binop>::= +
-         | -
-         | *
-         | /
-         | <
-         | >
-         | <=
-         | >=
-         | and
-         | or
-
+{
+  "direct": 0
+  "vertices": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+  "edges": [
+    ["a", "b", 11],
+    ["a", "e", 1],
+    ["a", "f", 4],
+    ["b", "c", 8],
+    ["b", "g", 8],
+    ["c", "d", 3],
+    ["c", "h", 3],
+    ["d", "e", 3],
+    ["d", "i", 2],
+    ["e", "j", 1],
+    ["f", "h", 9],
+    ["f", "i", 7],
+    ["g", "i", 4],
+    ["g", "j", 1],
+    ["h", "j", 9]
+  ]
+}
 \end{verbatim}
-  \end{minipage}
-\end{tabular}
 
-Esta práctica se puede entregar en equipos de a lo más tres
-personas.
+\textbf{Formato xml:}
+\begin{verbatim}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE graph PUBLIC "-//FC//DTD matrix//EN" "./graph.dtd">
+<graph direct="0">
+  <vertex label="a"/>
+  <vertex label="b"/>	
+  <vertex label="c"/>
+  <vertex label="d"/>
+  <vertex label="e"/>
+  <vertex label="f"/>
+  <vertex label="g"/>
+  <vertex label="h"/>
+  <vertex label="i"/>
+  <vertex label="j"/>
+  <edge source="a" target="b" weight="11"/>
+  <edge source="a" target="e" weight="1"/>
+  <edge source="a" target="f" weight="4"/>
+  <edge source="b" target="c" weight="8"/>
+  <edge source="b" target="g" weight="8"/>
+  <edge source="c" target="d" weight="3"/>
+  <edge source="c" target="h" weight="3"/>
+  <edge source="d" target="e" weight="3"/>
+  <edge source="d" target="i" weight="2"/>
+  <edge source="e" target="j" weight="1"/>
+  <edge source="f" target="h" weight="9"/>
+  <edge source="f" target="i" weight="7"/>
+  <edge source="g" target="i" weight="4"/>
+  <edge source="g" target="j" weight="1"/>
+  <edge source="h" target="j" weight="9"/>
+</graph>
+\end{verbatim}
 
-Esta práctica debe ser implementada con la variante plai, es decir
-su archivo rkt debe tener como primer linea lo siguiente:
-\texttt{\#lang plai}.
+En esta practica sera la implementacion de clases para la representacion de graficas (dirigidas y no dirigidas), la implementacion de funcionalidad basica del algoritmo de Kruskal para obtener el arbol de peso minimo de la grafica. 
 
-Todos los ejercicios requieren contar con pruebas mediante el uso de
-la función \texttt{test}.
+Esta práctica se puede entregar en equipos de a lo más tres personas.
+
+Esta práctica debe ser implementada con cualquier lenguaje orientado a objetos excepto \textbf{Java}.
+
+Se debe incluir un archivo README que indique las instrucciones para correr su programa.
 
 \section{Ejercicios}
 
 \begin{enumerate}
 
-\item \grade{1} \textbf{Booleanos} Agrega al tipo RCFAE y RCFAE-Value la variante booleana. Esto es que en sintaxis concreta puedas reconocer símbolos \texttt{true} y \texttt{false} y al momento de procesar la lista de símbolos de una expresión que los incluya con \emph{parse}, en el árbol de sintaxis abstracta los manejes por medio de la variante de tipo \texttt{bool} (análogo a \texttt{num}), adicional a la variante \texttt{boolV} para el intérprete. \\
+\item \grade{3} \textbf{Graph} Implementar una clase que represente una grafica debe tener por lo menos las siguientes funciones:
 
-\item \grade{1} \textbf{if} Agrega al parser y al intérprete la variante \texttt{if}, que recibe tres argumentos que son expresiones RCFAE. Al interpretarse, si la evaluación del primer argumento es \texttt{(boolV \#t)}, la evaluación del \texttt{if} es de la evaluación de la primera expresión RCFAE recibida. En caso de que sea \texttt{(boolV \#f)}, la evaluación del \texttt{if} es la evaluación de la segunda expresión RCFAE recibida. \\
+  \begin{itemize}
+  \item \textbf{directed} Una funcion que regresa u booleano, true si la grafica es dirigida y false si no lo es.
+  \item \textbf{vertices} Una funcion que regresa un arreglo con todos los vertices de la grafica.
+  \item \textbf{edges} Una funcion que regresa todas las aristas de la grafica.
+  \end{itemize}
 
-\item \grade{1} \textbf{equal?} Agrega al parser y al intérprete la variante \texttt{equal?}, que recibe dos expresiones RCFAE. Si las dos expresiones son \texttt{numV}, compara si son los mismos números regresando \texttt{(boolV \#t)} o \texttt{(boolV \#f)} según sea el caso. Si son expresiones booleanas, sólo si son iguales valores \texttt{boolV}. Cualquier otro caso de uso de \texttt{isequal?} no es válido y debes regresar un mensaje de error que diga ``La aplicación de equal? no es adecuada''. En tu README explica qué inconvenientes tendría implementar \textbf{equal?} como parte de la variante de tipo \texttt{binop}. \\
+\item \grade{1.5} \textbf{Vertex} Clase que representa un vertice de la grafica, debe tener por lo menos las siguientes funciones:
 
-\item \grade{1} \textbf{op, binop} Terminar de implementar todas las operaciones unarias y binarias indicadas en la definición de la sintaxis de RCFAE. \\
+  \begin{itemize}
+  \item \textbf{neighbours} Una funcion que regresa los vertices adyacentes del vertice dado.
+  \item \textbf{grade} Una funcion que indica el grado del vertice.
+  \end{itemize}
 
-\item \grade{4} \textbf{RCFAE} Implementar los ambientes recursivos por medio de cajas para la variante de tipo \emph{rec} \\
+\item \grade{1.5} \textbf{Edge} Clase que representa una arista de la grafica, debe tener por lo menos las siguientes funciones:
 
-\item \grade{2} \textbf{Procedurales} Implementar los ambientes recursivos por medio de \emph{procedimientos} para la variante de tipo \emph{rec} \\
+  \begin{itemize}
+  \item \textbf{svertex} Regresa el vertice origen de la arista.
+  \item \textbf{tvertex} Regresa el vertice destino de la arista.
+  \item \textbf{weight} El peso de la arista
+  \end{itemize}
+
+ \item \grade{3} \textbf{GraphReader} Deben implementar una clase que tome una ruta a un archivo (ya sea XML, JSOn o CSV) y que regrese un objeto de la clase \texttt{Graph}
+
+ \item \grade{1} \textbf{Kruskal} Se debe de implementar una funcion que tome una grafica y nos regrese el arbol de peso minimo.
+
+   Finalmente al correr su programa se debe de cargar por cada formato la grafica de Peteren y imprimir lo siguiente:
+   \begin{itemize}
+   \item Los vertices de la grafica
+   \item Las aristas de la grafia con sus pesos
+   \item Las aristas del arbol de peso minimo de la grafica, con su peso total.
+   \end{itemize}
+
+ \textbf{IMPORTANTE:} Se restaran 2 puntos de no presentarse polimorfismo en alguno de los puntos anteriormente mencionados.
 
 \end{enumerate}
 
