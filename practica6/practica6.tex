@@ -17,20 +17,20 @@
 \author{Profesora: Karla Ramírez Pulido \and
   Ayudante teoría: Joshua Emmanuel Mendoza Mendieta \and
   Ayudante laboratorio: Héctor Enrique Gómez Morales}
-\title{Practica 6 - Programacion Orientada a Objetos}
+\title{Practica 6 - Programación Orientada a Objetos}
 \date{Fecha de inicio: 22 de mayo de 2015\\
   \textbf{Fecha de entrega: 12 de junio de 2015}}
 \begin{document}
 \maketitle
 \section{Instrucciones}
 
-Una grafica es un par ordenado $G = (V, E)$ compuesto de un conjunto $V$ de vertices y un conjunto $E$ de aristas.
-En esta practica la grafica se puede representar en tres tipos de formatos.
+Una gráfica $G = (V, E)$ es un par ordenado compuesto por un conjunto $V$ de vértices y un conjunto $E$ de aristas.
+En esta practica la gráfica se puede representar en tres tipos de formatos.
 
 
-\textbf{Formato CSV:} En el primer renglon se indica si la grafica es dirigida (direct=1) o no (direct=0).
-En cada renglon subsecuente se define una arista de la grafica, las dos primeras columnas indican
-el vertice origen y el vertice destino de la arista. La tercera columna indica el peso de la arista.
+\textbf{Formato CSV:} En el primer renglón se indica si la gráfica es dirigida (direct=1) o no (direct=0).
+En cada renglón subsecuente se define una arista de la gráfica, las dos primeras columnas indican
+el vértice origen y el vértice destino de la arista. La tercera columna indica el peso de la arista.
 
 \begin{verbatim}
 direct=0
@@ -52,8 +52,7 @@ direct=0
 \end{verbatim}
 
 
-\textbf{Formato JSON:} Es el formato mas popular para el intercambio de informacion en Web. se tienen tres llaves: direct, vertices y edges. La primera direct indica con un entero si la grafica es dirigida (direct: 1) o si es no dirigida (direct: 0). En la llave vertices se tiene un arreglo con los todos los vertices de la grafica, finalmente en la
-llave edges se tiene un arreglo con las aristas de la grafica. 
+\textbf{Formato JSON:} Es el formato mas popular para el intercambio de información en Web. se tienen tres llaves: \texttt{direct, vertices y edges}. La primera \texttt{direct} indica con un entero si la gráfica es dirigida (direct: 1) o si es no dirigida (direct: 0). En la llave \texttt{vertices} se tiene un arreglo con los todos los vertices de la gráfica, finalmente en la llave \texttt{edges} se tiene un arreglo con las aristas de la gráfica. 
 
 \begin{verbatim}
 {
@@ -112,53 +111,55 @@ llave edges se tiene un arreglo con las aristas de la grafica.
 </graph>
 \end{verbatim}
 
-En esta practica sera la implementacion de clases para la representacion de graficas (dirigidas y no dirigidas), la implementacion de funcionalidad basica del algoritmo de Kruskal para obtener el arbol de peso minimo de la grafica. 
+En esta practica será trabajara en la implementación de gráficas (dirigidas y no dirigidas), haciendo uso de un lenguaje orientado a objetos haciendo uso de herencia y polimorfismo.
 
 Esta práctica se puede entregar en equipos de a lo más tres personas.
 
 Esta práctica debe ser implementada con cualquier lenguaje orientado a objetos excepto \textbf{Java}.
 
-Se debe incluir un archivo README que indique las instrucciones para correr su programa.
+Se debe incluir un archivo \texttt{README} que indique las instrucciones para correr su programa.
 
 \section{Ejercicios}
 
 \begin{enumerate}
 
-\item \grade{3} \textbf{Graph} Implementar una clase que represente una grafica debe tener por lo menos las siguientes funciones:
+\item \grade{3} \textbf{Graph} Implementar una clase que represente una gráfica debe tener por lo menos los siguientes métodos:
 
   \begin{itemize}
-  \item \textbf{directed} Una funcion que regresa u booleano, true si la grafica es dirigida y false si no lo es.
-  \item \textbf{vertices} Una funcion que regresa un arreglo con todos los vertices de la grafica.
-  \item \textbf{edges} Una funcion que regresa todas las aristas de la grafica.
+  \item \textbf{directed}, regresa u booleano, \texttt{true} si la gráfica es dirigida y \texttt{false} en caso contrario.
+  \item \textbf{vertices}, regresa un arreglo con todos los vertices de la gráfica.
+  \item \textbf{edges}, regresa todas las aristas de la gráfica.
   \end{itemize}
 
-\item \grade{1.5} \textbf{Vertex} Clase que representa un vertice de la grafica, debe tener por lo menos las siguientes funciones:
+\item \grade{1.5} \textbf{Vertex} Clase que representa un vértice de la gráfica, debe tener por lo menos los siguiente métodos:
 
   \begin{itemize}
-  \item \textbf{neighbours} Una funcion que regresa los vertices adyacentes del vertice dado.
-  \item \textbf{grade} Una funcion que indica el grado del vertice.
+  \item \textbf{neighbours}, regresa los vertices adyacentes del vértice dado.
+  \item \textbf{degree}, regresa el grado del vértice.
   \end{itemize}
 
-\item \grade{1.5} \textbf{Edge} Clase que representa una arista de la grafica, debe tener por lo menos las siguientes funciones:
+\item \grade{1.5} \textbf{Edges} Clase que representa una arista de la gráfica, debe tener por lo menos los siguientes métodos:
 
   \begin{itemize}
-  \item \textbf{svertex} Regresa el vertice origen de la arista.
-  \item \textbf{tvertex} Regresa el vertice destino de la arista.
-  \item \textbf{weight} El peso de la arista
+  \item \textbf{svertex}, regresa el vértice origen de la arista.
+  \item \textbf{tvertex}, regresa el vértice destino de la arista.
+  \item \textbf{weight}, regresa el peso de la arista.
   \end{itemize}
 
- \item \grade{3} \textbf{GraphReader} Deben implementar una clase que tome una ruta a un archivo (ya sea XML, JSOn o CSV) y que regrese un objeto de la clase \texttt{Graph}
+ \item \grade{3} \textbf{GraphReader} Deben implementar una clase que tome una ruta a un archivo (ya sea \texttt{XML, JSON,CSV}) y que regrese un objeto de la clase \texttt{Graph}
 
- \item \grade{1} \textbf{Kruskal} Se debe de implementar una funcion que tome una grafica y nos regrese el arbol de peso minimo.
+ \item \grade{1} \textbf{has\_cycles} Se debe de implementar un método que tome una gráfica y regrese \texttt{true} si la gráfica tiene ciclos o \texttt{false} en caso contrario.
 
-   Finalmente al correr su programa se debe de cargar por cada formato la grafica de Peteren y imprimir lo siguiente:
+   Finalmente al correr su programa se debe cargar cada uno de los formatos para la gráfica de petersen y la gráfica \texttt{graph} que se encuentran en el directorio \texttt{ejemplos} de la practica y imprimir lo siguiente:
+   
    \begin{itemize}
-   \item Los vertices de la grafica
-   \item Las aristas de la grafia con sus pesos
-   \item Las aristas del arbol de peso minimo de la grafica, con su peso total.
+   \item El nombre del archivo de la gráfica, ie. petersen.json o graph.xml
+   \item Los vertices de la gráfica
+   \item Las aristas de la gráfica con sus pesos
+   \item Indicar si la gráfica tiene ciclos.
    \end{itemize}
 
- \textbf{IMPORTANTE:} Se restaran 2 puntos de no presentarse polimorfismo en alguno de los puntos anteriormente mencionados.
+ \textbf{IMPORTANTE:} Se restaran 2 puntos de no presentarse herencia y/o polimorfismo en alguno de los puntos anteriormente mencionados.
 
 \end{enumerate}
 

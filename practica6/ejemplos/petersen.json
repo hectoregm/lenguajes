@@ -1,6 +1,6 @@
 {
-  "direct": 0
-  "vertices": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+  "direct": 0,
+  "vertices": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
   "edges": [
     ["a", "b", 11],
     ["a", "e", 1],
