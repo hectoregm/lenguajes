@@ -10,33 +10,33 @@
 \pagestyle{fancy}
 
 %\sloppy
-\lhead{Lineamientos} 
-\chead{} 
-\rhead{Lenguajes de Programación} 
+\lhead{Lineamientos}
+\chead{}
+\rhead{Lenguajes de Programación}
 \lfoot{}
-\cfoot{\thepage} 
-\rfoot{} 
+\cfoot{\thepage}
+\rfoot{}
 %\setlength{\headrulewidth}{0.4pt}
 %\setlength{\footrulewidth}{0.4pt}
 \usepackage{array}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}b{#1}}
 \begin{document}
 \begin{center}
-\begin{tabular}[h]{c C{10cm} c}
-\includegraphics[scale=.2]{cover.png} & 
-\textbf{{\Large Lenguajes de \newline Programación}} 
-\newline \textbf{Profesor}: Karla Ramírez Pulido 
-\newline \textbf{Ayudante de Teoría}: Héctor Enrique Gómez Morales
-\newline \textbf{Ayudante le Laboratorio}: Héctor Enrique Gómez Morales
-\newline Inicio de semestre: 10 de agosto de 2015
-\newline Fin de semestre: 27 de noviembre de 2015 &
-\includegraphics[scale=.4]{cover2.png}
-\end{tabular}
+  \begin{tabular}[h]{c C{10cm} c}
+    \includegraphics[scale=.2]{cover.png} &
+    \textbf{{\Large Lenguajes de \newline Programación}}
+    \newline \textbf{Profesor}: Karla Ramírez Pulido
+    \newline \textbf{Ayudante de Teoría}: Héctor Enrique Gómez Morales
+    \newline \textbf{Ayudante le Laboratorio}: Héctor Enrique Gómez Morales
+    \newline Inicio de semestre: 10 de agosto de 2015
+    \newline Fin de semestre: 27 de noviembre de 2015 &
+    \includegraphics[scale=.4]{cover2.png}
+  \end{tabular}
 \end{center}
 
 \begin{itemize}
 \item \textbf{Acerca del Curso}
-  
+
   \begin{itemize}
   \item  Nombre de la materia: Lenguajes de Programación.
   \item Tipo de materia: Obligatoria de 5to. semestre en Ciencias de
@@ -52,67 +52,72 @@
 
 \item \textbf{Lenguaje de Programación}
 
-El principal lenguaje de programación que se usará será Racket (un
-descendiente de Scheme), aunque habrán prácticas en que tendrán
-que utilizar otro lenguaje. Para las prácticas en Racket se utilizará el
-intérprete del PLT (también conocido como DrRacket) versión 6.2. El dialecto que se
-usará en el curso (a menos que se especifique uno diferente para alguna práctica)
-será PLAI.
+  El principal lenguaje de programación que se usará será Racket (un
+  descendiente de Scheme), aunque habrán prácticas en que tendrán
+  que utilizar otro lenguaje. Para las prácticas en Racket se utilizará el
+  intérprete del PLT (también conocido como DrRacket) versión 6.2. El dialecto que se
+  usará en el curso (a menos que se especifique uno diferente para alguna práctica)
+  será PLAI.
 
 \item \textbf{Evaluación - Teoría}
-  
-  La evaluación de la parte teórica sera por medio de tareas que constaran de un conjunto de preguntas.
+
+  La evaluación de la parte teórica sera por medio de tareas que constaran de un conjunto de preguntas, las cuales deberán responder correctamente.
 
   La forma de entrega de las tareas debe ser:
   \begin{itemize}
   \item En un documento en formato PDF, preferentemente usando \LaTeX.
   \item La tarea debe tener el siguiente formato para su nombre:
-  \begin{verbatim}
-    <Apellido Paterno>_<Apellido Materno>_<Nombres>_TareaN.pdf
-  \end{verbatim}
-  \item Este documento debe estar en linea en un repositorio en Github,
-    dentro de un directorio llamado Tareas.
+\begin{verbatim}
+  <Apellido Paterno>_<Apellido Materno>_<Nombres>_TareaN.pdf
+\end{verbatim}
+\item Este documento debe estar en linea en un repositorio en Github,
+  dentro de un directorio llamado Tareas.\footnote{Github y el uso de git se dará a conocer en clase de ayudantía.}
   \end{itemize}
 
   \textbf{No} se aceptaran tareas hechas a mano.
 
-\pagebreak
+  \pagebreak
 
 \item \textbf{Forma de Evaluación}
-  
+
   La forma de evaluar a cada alumno está dada por los rubros:
   exámenes, prácticas y teoría.
-  
+
   \begin{itemize}
   \item Exámenes: 40\%
   \item Prácticas: 30\%
   \item Tareas: 30\%
   \end{itemize}
-    
+
   Las siguientes son restricciones generales sobre proceso de calificación y entrega de prácticas, reportes, evaluaciones y exámenes:
-  
-  \begin{itemize} 
+
+  \begin{itemize}
   \item No habrá reposición de exámenes, reportes, evaluaciones, ni prácticas.
   \item No habrá examen final.
   \item La fecha y forma de entrega de las prácticas y parte teórica será \textbf{estricta e inapelable}, esto es, no habrá prórrogas.
   \item Los exámenes serán evaluados individualmente; las prácticas, los reportes escritos y las evaluaciones presenciales serán por equipos de 2 personas mínimo a 3 personas máximo.
   \item Cualquier reporte que incluya traducciones automáticas (o carentes de sentido) tendrá calificación de 0 automáticamente.
   \item Para tener derecho a presentar cada examen en el curso se deberán haber entregado todas y cada uno de los reportes previos al mismo.
-   \end{itemize}
-    
+  \end{itemize}
+
   Las siguientes reglas  no se pueden cambiar bajo ninguna circunstancia. Incurrir en el incumplimiento de alguna de ellas implica obtener automáticamente una calificación final de 5:
   \begin{itemize}
-  \item Está estrictamente prohibido cometer plagio. El plagio implica reproducir (o traducir de manera literal) íntegra o parcialmente tareas, prácticas, publicaciones, anotaciones, etc. sin señalar de forma precisa a su autor original e indicar el documento o lugar en el que se encontró. 
+  \item Está estrictamente prohibido cometer plagio. El plagio implica reproducir (o traducir de manera literal) íntegra o parcialmente tareas, prácticas, publicaciones, anotaciones, etc. sin señalar de forma precisa a su autor original e indicar el documento o lugar en el que se encontró.
   \item Es necesario cumplir al menos con el 80\% de asistencia incluyendo las ayudantías.
-  \end{itemize} 
-  
+  \end{itemize}
+
   Las calificaciones finales serán definitivas. El único caso en el que se podrá obtener NP será el no haber entregado ninguna tarea, práctica o examen.
-  
-  \item \textbf{Lista de Correo}
+
+\item \textbf{Lista de Correo}
 
   La lista de correo del curso es: \textbf{lenguajes@googlegroups.com} donde se
   podrán discutir las dudas de prácticas y temas relacionados
   con el curso entre otras cosas.
+
+  \begin{itemize}
+  \item Correo del Profesor: \textbf{karla@ciencias.unam.mx}
+  \item Correo del Ayudante: \textbf{hectoregm@gmail.com}
+  \end{itemize}
 
 \item \textbf{Página del Curso}
 
@@ -122,7 +127,7 @@ será PLAI.
   vez, se publicará información relacionada con calificaciones,
   lineamientos, el uso del taller y noticias mencionadas en
   clase. La página estará disponible en: \\
-  \url{http://valhalla.fciencias.unam.mx/lenguajes} 
+  \url{http://valhalla.fciencias.unam.mx/lenguajes}
 
 \end{itemize}
 \end{document}
