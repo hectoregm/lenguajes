@@ -10,8 +10,7 @@
 \begin{document}
 \maketitle
 \section{Instrucciones}
-En esta práctica se tienen diez ejercicios, cada ejercicio
-tiene el valor de un punto.
+En esta práctica se tienen once ejercicios.
 
 Esta práctica debe ser implementada con la variante plai, es decir
 su archivo con terminación \textit{.rkt} debe tener como primer linea lo siguiente:
@@ -43,16 +42,17 @@ Cada ejercicio debe contar al menos con \textbf{cinco} pruebas.
 funciones auxiliares. No puedes utilizar funciones de Racket que
 resuelvan \textbf{directamente} los ejercicios.
 \begin{itemize}
-\item $\textbf{mcd \& mcm}$ - Define las funciones mcd y mcm que
-  toman dos números y regresan su máximo común divisor y mínimo común
-  múltiplo respectivamente, \textit{i.e.}
-\begin{verbatim}
-> (mcd 72 32)
-8
-> (mcm 8 6)
-24
-\end{verbatim}
 
+\item $\textbf{pow}$ - Define la función pow tal que toma dos números enteros
+  positivos  $z$ y $w$ y regresa el numero que se obtiene de elevar el numero $z$ a la potencia $w$, \textit{i.e.}
+\begin{verbatim}
+> (pow 2000 0)
+1
+> (pow  2 3)
+8
+> (pow 8 6)
+262144
+\end{verbatim}
 \newpage
 
 \item $\textbf{average}$ - Dado una lista no vacía de números, regresar el
@@ -151,15 +151,32 @@ utilizar funciones básicas de Racket como son \texttt{car, cdr, cons,
 ’(2 4 6)
 \end{verbatim}
 
-\item $\textbf{mreverse}$ - Dada una lista, regresar otra lista con
-  los elementos de la lista original en orden inverso, \textit{i.e.}
+\item $\textbf{any?}$ - Dado un predicado de un argumento y
+  una lista se debe regresar $\#t$ cuando por lo menos un
+  elemento de la lista regresa $\#t$ con el predicado dado.
+  En caso contrario regresa $\#f$, \textit{i.e.}
 \begin{verbatim}
-> (mreverve ’(1 2 3 4 5))
-’(5 4 3 2 1)
-> (mreverve ’(100 99))
-’(99 100)
-> (mreverve ’())
-’()
+> (any? number? '())
+#f
+> (any? number? '(a b c d 1))
+#t
+> (any? symbol? '(1 2 3 4))
+#f
+\end{verbatim}
+
+\item $\textbf{every?}$ - Dado un predicado de un argumento y
+  una lista se debe regresar solamente $\#t$ cuando cada uno
+  de los elementos de la lista regresa $\#t$ para el predicado dado.
+  En caso contrario regresa $\#f$, \textit{i.e.}
+\begin{verbatim}
+> (every? number? '())
+#t
+> (every? number? '(1 2 3))
+#t
+> (every? number? '(1 2 3 a))
+#f
+> (every? symbol? '(1 2 3 a))
+#f
 \end{verbatim}
 
 \item $\textbf{mpowerset}$ - Dada una lista, regresar otra como el
