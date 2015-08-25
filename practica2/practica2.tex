@@ -4,23 +4,16 @@
 \usepackage[utf8]{inputenc}
 \author{Profesora: Karla Ramírez Pulido \and
   Ayudante: Héctor Enrique Gómez Morales}
-\title{Practica 2 - Data Types Parte 1 de 2}
+\title{Practica 2 - Tipos de Datos Parte 1 de 2}
 \date{Fecha de inicio: 26 de agosto de 2015\\
   \textbf{Fecha de entrega: 9 de septiembre de 2015}}
 \begin{document}
 \maketitle
 \section{Instrucciones}
-En esta práctica se tienen doce ejercicios, los primeros once son
-obligatorios siendo solamente el ultimo opcional con valor de un
-punto extra. Por lo tanto la calificación máxima que se puede obtener en
-esta práctica es 11.
-
-Esta practica se puede entregar en equipos de a lo máximo dos
-personas, pero se recomienda que esta practica la hagan de forma
-individual.
+En esta práctica se tienen dieciocho ejercicios.
 
 Esta práctica debe ser implementada con la variante plai, es decir
-su archivo rkt debe tener como primer linea lo siguiente:
+su archivo con terminación \textit{.rkt} debe tener como primer linea lo siguiente:
 \texttt{\#lang plai}. Pueden utilizar sólo la paquetería básica de
 \texttt{racket/base}, las funciones que se implementaron en la
 practica 1 y funciones auxiliares que ustedes definan.
@@ -31,11 +24,10 @@ la función \texttt{test}:
 (test <result-expr> <expected-expr>)
 \end{verbatim}
 
-En donde \textit{result-expr} es la expresión que se evalúa a cierto
-valor que es comparado con \textit{expected-expr} que es otra
-expresión que evalúa al valor esperado. Si las dos expresiones evalúan
-a lo mismo la prueba imprime el éxito de la prueba, en caso contrario
-indicar un error.
+En donde \textit{result-expr} es una expresión que se evalúa y su valor obtenido
+es comparado con valor obtenido de la expresión \textit{expected-expr} que es el
+valor esperado de la prueba. Si las dos expresiones evalúan a lo mismo la prueba
+imprime el éxito de la prueba, en caso contrario indicar un error.
 
 \begin{verbatim}
 > (test (+ 1 2) 3)
@@ -45,7 +37,7 @@ indicar un error.
 (bad (+ 1 2) 3 4 "at line 36")
 \end{verbatim}
 
-Cada ejercicio debe contar al menos con cinco pruebas.
+Cada ejercicio debe contar al menos con \textbf{cinco} pruebas.
 
 \section{Ejercicios}
 \textbf{Sección I. Tipos de datos recursivos y no recursivos} Define
@@ -59,8 +51,6 @@ los siguientes tipos de datos que se te piden.
 > (MArray 4 '(1 2 3))
 (Marray 4 '(1 2 3))
 \end{verbatim}
-
-\newpage
 
 \item $\textbf{List}$ - Definir un tipo de dato recursivo llamado
   \texttt{MList} que tenga a la lista vacía \texttt{MEmpty} y el
@@ -148,9 +138,21 @@ resuelvan \textbf{directamente} los ejercicios.
 . . setvalueA: Out of bounds
 \end{verbatim}
 
+\item $\textbf{MArray2MList}$ - Dado un arreglo de tipo \texttt{MArray},
+  regresar una lista de tipo \texttt{MList} que contenga todos los
+  elementos del arreglo original, \textit{i.e.}
+\begin{verbatim}
+> (MArray2MList (MArray 0 '()))
+(MEmpty)
+> (MArray2MList (MArray 5 '("a" "b")))
+(MCons "a" (MCons "b" (MEmpty)))
+> (MArray2MList (MArray 3 '(1 2 3)))
+(MCons 1 (MCons 2 (MCons 3 (MEmpty))))
+\end{verbatim}
+
 \item $\textbf{printML}$ - Dada una lista de tipo \texttt{MList},
   imprimirla en un formato legible. Puedes utilizar las funciones para
-  manipular strings y la función \texttt{$\sim a$}, \textit{i.e.}
+  manipular cadenas y la función \texttt{$\sim a$}, \textit{i.e.}
 \begin{verbatim}
 > (printML (MEmpty))
 "[]"
@@ -180,6 +182,98 @@ resuelvan \textbf{directamente} los ejercicios.
 2
 \end{verbatim}
 
+\item $\textbf{mapML}$ - Dada una lista de tipo MLista y una funcion de aridad 1,
+  regresar una lista de tipo MLista con la aplicación de la funcion a cada uno de
+  los elementos de la lista original, \textit{i.e.}
+\begin{verbatim}
+> (mapML add1 (MCons 7 (MCons 4 (MEmpty))))
+(MCons 8 (MCons 5 (MEmpty)))
+> (mapML (lambda (x) (* x x)) (MCons 10 (MCons 3 (MEmpty))))
+(MCons 100 (MCons 9 (MEmpty)))
+\end{verbatim}
+
+\newpage
+
+\item $\textbf{filterML}$ - Dada una lista de tipo MLista y un predicado de un
+  argumento, regresar una lista de tipo MLista sin los elementos que al aplicar
+  el predicado, regresa falso, \textit{i.e.}
+\begin{verbatim}
+> (filterML (lambda (x) (not (zero? x))) (MCons 2 (MCons 0 (MCons 1 (MEmpty)))))
+(MCons 2 (MCons 1 (MEmpty)))
+> (filterML (lambda (l) (not (MEmpty? l)))
+            (MCons (MCons 1 (MCons 4 (MEmpty))) (MCons (MEmpty) (MCons 1 (MEmpty)))))
+(MCons (MCons 1 (MCons 4 (MEmpty))) (MCons 1 (MEmpty)))
+\end{verbatim}
+
+Definamos los siguientes tipos de datos y valores:
+\begin{verbatim}
+(define-type Coordinates
+  [GPS (lat number?)
+       (long number?)])
+
+(define-type Location
+  [building (name string?)
+            (loc GPS?)])
+
+;; Coordenadas GPS
+(define gps-satelite (GPS 19.510482 -99.23411900000002))
+(define gps-ciencias (GPS 19.3239411016 -99.179806709))
+(define gps-zocalo (GPS 19.432721893261117 -99.13332939147949))
+(define gps-perisur (GPS 19.304135 -99.19001000000003))
+
+(define plaza-satelite (building "Plaza Satelite" gps-satelite))
+(define ciencias (building "Facultad de Ciencias" gps-ciencias))
+(define zocalo (building "Zocalo" gps-zocalo))
+(define plaza-perisur (building "Plaza Perisur" gps-perisur))
+
+(define plazas (MCons plaza-satelite (MCons plaza-perisur (MEmpty))))
+\end{verbatim}
+
+\item $\textbf{haversine}$ - Dados dos valores de tipo \texttt{GPS} calcular
+  su distancia usando la formula de \texttt{haversine}, \textit{i.e.}
+\begin{verbatim}
+> (haversine gps-ciencias gps-zocalo)
+13.033219276117368
+> (haversine gps-ciencias gps-perisur)
+2.44727738966455
+> (haversine gps-satelite gps-perisur)
+23.391736010506026
+\end{verbatim}
+
+\newpage
+
+\item $\textbf{gps-coordinates}$ - Dada una lista de edificios, regresar
+  la lista de coordenadas GPS de los edificios, las listas deben ser construidas
+  con el tipo de dato \texttt{MList}, \textit{i.e.}
+\begin{verbatim}
+> (gps-coordinates (MEmpty))
+(MEmpty)
+> (gps-coordinates plazas)
+(MCons
+ (GPS 19.510482 -99.23411900000002)
+ (MCons (GPS 19.304135 -99.19001000000003) (MEmpty)))
+\end{verbatim}
+
+\item $\textbf{closest-building}$ - Dado \textit{b} un valor de tipo \texttt{building} y una lista de tipo \texttt{MList} de buildings, regresar el edificio mas cercano a \textit{b}, \textit{i.e.}
+\begin{verbatim}
+> (closest-building zocalo plazas)
+(building "Plaza Satelite" (GPS 19.510482 -99.23411900000002))
+> (closest-building ciencias plazas)
+(building "Plaza Perisur" (GPS 19.304135 -99.19001000000003))
+\end{verbatim}
+
+\item $\textbf{buildings-at-distance}$ - Dado \textit{b} un valor de tipo \texttt{building}, una lista de tipo \texttt{MList} de buildings y una distancia \textit{d}, regresar una nueva lista de todos los edificios que están a distancia menor o igual a \textit{d} del edificio \textit{b}, \textit{i.e.}
+\begin{verbatim}
+> (buildings-at-distance ciencias plazas 10)
+(MCons (building "Plaza Perisur" (GPS 19.304135 -99.19001000000003)) (MEmpty))
+> (buildings-at-distance ciencias plazas 20)
+(MCons (building "Plaza Perisur" (GPS 19.304135 -99.19001000000003)) (MEmpty))
+> (buildings-at-distance ciencias plazas 25)
+(MCons
+ (building "Plaza Satelite" (GPS 19.510482 -99.23411900000002))
+ (MCons (building "Plaza Perisur" (GPS 19.304135 -99.19001000000003)) (MEmpty)))
+\end{verbatim}
+
 \item $\textbf{area}$ - Dada una figura del tipo \texttt{Figure},
   regresar el área de la figura, \textit{i.e.}
 \begin{verbatim}
@@ -202,11 +296,4 @@ resuelvan \textbf{directamente} los ejercicios.
 \end{verbatim}
 
 \end{itemize}
-
-\textbf{Punto extra:} \texttt{in-figure-3D?} - Dados los siguientes tipos de datos:
-\begin{itemize}
-\item{ \texttt{3D-Point} que define un punto en 3D.}
-\item{\texttt{Figure3D} que define una figura en 3D que tenga al menos tres variantes (por ejemplo: Sphere, Cube)}.
-\end{itemize}
-Entonces se debe implementar \texttt{in-figure-3D?} que tome una figura \texttt{fig} del tipo \texttt{Figure3D} y una posición \texttt{p} del tipo \texttt{3D-Point} entonces regresa \#t si \texttt{p} esta dentro de \texttt{fig} y \#f en caso contrario
 \end{document}
