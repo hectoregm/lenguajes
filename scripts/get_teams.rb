@@ -1,4 +1,5 @@
 require 'csv'
+require 'json'
 
 INDEX_TEAM = 11
 INDEX_REPO = 12
@@ -6,12 +7,21 @@ teams = {}
 
 CSV.foreach('lenguajes20161.csv') do |row|
   team_name = row[10]
-  teams[team_name] = row[11] if team_name && !teams[team_name]
+
+  if team_name
+    puts team_name
+    teams[team_name] = {} if team_name && !teams[team_name]
+    teams[team_name][:members] = [] if team_name && !teams[team_name][:members]
+    teams[team_name][:repo] = row[11]
+    teams[team_name][:members] << "#{row[2]} #{row[3]} #{row[4]}"
+  end
 end
 
-teams.sort.each do |name, repo|
-  puts "#{name}: #{repo}"
+teams.sort.each do |name, data|
+  puts "#{name}: #{data.inspect}"
 end
+
+File.open('teams.json', 'w') { |f| f.write(JSON.generate(teams)) }
 
 puts 'Professional Level Languages'
 professional_languages = {}

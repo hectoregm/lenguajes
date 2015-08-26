@@ -1,46 +1,51 @@
-1,308043305,Abrego,Álvarez,Jonathan,C. Computación,2012,Ord,,No,Equipo 2,https://github.com/firecold100/lenguajes20161_firecolod100.git,abreg.fc@gmail.com,Java:SQL:Ruby:C++,Haskell:C:Javascript:Python:PHP,Prolog:Vala
-2,310566104,Abud,Alcalá,Gibrán Abner,C. Computación,2013,Ord,,No,,,,,,
-3,311154243,Acosta,Hérnandez,Carlos Gerardo,C. Computación,2014,Ord,,No,Equipo 3,git@github.com:Pernath/lenguajes20161_ReyVenado.git,,Java,Python:Prolog:Haskell:C:SQL:Vala,C++:C#:Cobol:Fortran:Pascal:Lisp
-4,305232355,Alanis,Colin,Cristian Ignacio,C. Computación,2009,Exl,,Si,,,,,,
-5,310090034,Anzures,Reyes,Miguel Alejandro,C. Computación,2013,Ord,,No,Equipo 8,https://github.com/Alejandreyes/lenguajes20161_alejandreyes.git,,Java,Prolog:Haskell:C++:Pascal,C:Python:Ruby
-6,309043511,Ascencio,Espindola,Jorge Eduardo,C. Computación,2012,Ord,,No,Equipo 2,https://github.com/firecold100/lenguajes20161_firecolod100.git,yorche@ciencias.unam.mx,Java:Python:Haskell:Javascript:Ruby,C:C++:Prolog:PHP,Basic:Vala
-7,310030067,Beltrán,Hérnandez,Daniel,C. Computación,2013,Ord,,No,Equipo 6,git@github.com:renejesusgv/lenguajes2016_renejesusgv.git,,Java:Python,C:Haskell,Prolog
-8,311256512,Bernal,Cedillo,Enrique Antonio,C. Computación,2014,Ord,,No,Equipo 1,git@github.com:JorgeGarciaF/Lenguajes20161_JorgeGarciaF.git,,,,
-9,308037056,Bravo,García,Marco Antonio,C. Computación,2011,Ord,,No,,,,,,
-10,310053291,Contreras,Maya,Karla Andrea,C. Computación,2013,Ord,,No,Equipo 10,,,Java:C,Haskell:Python:C++,PHP:Prolog
-11,304830020,Cruz,Franco,Jorge Rafael,C. Computación,2014,Ord,,No,,,,,,
-12,311234031,Dondiego,Pacheco,Ricardo Daniel,C. Computación,2014,Ord,,No,,,,,,
-13,311106448,García,Flores,Jorge Luis,C. Computación,2014,Ord,,No,Equipo 1,git@github.com:JorgeGarciaF/Lenguajes20161_JorgeGarciaF.git,,,,
-14,310084510,García,García,Raúl Eduardo,C. Computación,2013,Ord,,No,,,,,,
-15,311008201,García,García,Ricardo,C. Computación,2014,Ord,,No,Equipo 4,https://github.com/rodrigorojo/lenguajes20161_rodrigorojo.git,,Java:Python,Haskell:C:Prolog:Python,C++:Julia:Vala
-16,310285580,Gaspar,Velasco,René Jesús,C. Computación,2013,Ord,,No,Equipo 6,git@github.com:renejesusgv/lenguajes2016_renejesusgv.git,,Java,Python:Haskell:C:Pascal:SQL,Javascript:Prolog
-17,310019569,Godínez,Galicia,Luis Alberto,C. Computación,2013,Ord,,No,,,,,,
-18,108000801,Gónzalez,Vargas,Andrea Itzel,C. Computación,2014,Ord,,No,Equipo 3,git@github.com:Pernath/lenguajes20161_ReyVenado.git,,Java,C:C++,Haskell:Prolog:Python:Pascal
-19,305307451,Hérnandez,Hérnandez,Alvaro,C. Computación,2009,Exl,,Si,,,,,,
-20,413024435,López,López,Juan Carlos,C. Computación,2014,Ord,,No,Equipo 4,https://github.com/rodrigorojo/lenguajes20161_rodrigorojo.git,,Java,C:Haskell:Prolog:Python,C++:Vala
-21,311279708,Márquez,Cortés,Francisco Javier,C. Computación,2014,Ord,,No,,,ratrabbit2@hotmail.com,Java:C,Python:Haskell:Prolog:SQL,PHP:Ruby:Lisp:Vala:Fortran:Cobol
-22,307204655,Martínez,Martínez,Julio César,C. Computación,2010,Exl,,Si,,,,Java:Haskell:Prolog:SQL,Python:C:Ruby,
-23,300195242,Medina,Peña,Raúl,C. Computación,2003,Exl,,Si,,,,,,
-24,311265075,Mendoza,Ponce,Miguel Angel,C. Computación,2014,Ord,,No,,,,,,
-25,304141234,Meza,Trejo,José Luis,C. Computación,2008,Exl,,Si,,,,,,
-26,310276412,Montiel,Arenas,Luis Javier,C. Computación,2013,Ord,,No,Equipo 5,https://github.com/LuisJavierMontielArenas/lenguajes20161_LuisJavierMontielArenas.git,,Javascript:Java:SQL,Python:C:Haskell:Prolog,Ruby:C++:C#
-27,307235943,Moreno,de la Rosa,Alan,C. Computación,2012,Ord,,No,Equipo 2,https://github.com/firecold100/lenguajes20161_firecolod100.git,c_m_a1990@ciencias.unam.mx,Java,Python:SQL:Haskell:Prolog:C,PHP:Ruby:Vala:Lisp:Fortran:Pascal:Cobol:C#:C++
-28,306043220,Ortíz,Alarcón,César Martín,C. Computación,2009,Exl,,Si,,,,,,
-29,310293606,Quiróz,Jiménez,Anahi,C. Computación,2013,Ord,,No,Equipo 9,https://github.com/NancyMH/lenguajes20161_NancyMatias,,Java,Python:C:Haskell:C++,PHP:C#:SQL
-30,107004095,Rivera,Mercado,Sergio,C. Computación,2013,Ord,,No,Equipo 7,,,,,
-31,310216971,Rivera,Sotomayor,Luis Rafael,C. Computación,2013,Ord,,No,Equipo 7,,,,,
-32,309216139,Rodríguez,Abreu,José Ricardo,C. Computación,2014,Ord,,No,,,,Java:SQL:C:Haskell,Ruby:C++,
-33,311177903,Rojo,Morales,Luis Rodrígo,C. Computación,2014,Ord,,No,Equipo 4,https://github.com/rodrigorojo/lenguajes20161_rodrigorojo.git,,Java,Haskell,C++:Python:Prolog:Ruby
-34,309267526,Sánchez,Alcántara,Jesús Esteban,C. Computación,2012,Ord,,No,Equipo 11,,,,,
-35,307214098,Santos,Osuna,Jesús,C. Computación,2011,Ord,,No,,,,,,
-36,310224994,Serrato,Solano,Víctor Manuel,C. Computación,2014,Ord,,No,,,,Java:Python,SQL:C:Haskell,PHP:Ruby
-37,309316497,Tapía,Peralta,Edgar,C. Computación,2012,Ord,,No,,,,,,
-38,307288949,Vela,Lara,María,C. Computación,2010,Ord,,No,,,,,,
-39,307293136,Zamudio,Cervantes,Luis Enrique,C. Computación,2011,Exl,,Si,,,,,,
-40,302147395,Zúñiga,Cervantes,Luis Miguel,C. Computación,2006,Exl,,Si,,,,,,
-41,,Herrera,Brito,Juan Jose,,,,,Si,Equipo T0,git@github.com:JuanHerreraBrito/lenguajes20161_JuanHerrera.git,fenix.gnf19@gmail.com,Java:PHP:Javascript:C#,C:Python:TurboPascal,Haskell:Prolog:Ruby:R:Objectve-C
-42,,Esquivel,Guzman,Karla Adriana,,,,,Si,Equipo 3,git@github.com:Pernath/lenguajes20161_ReyVenado.git,,Java,C:Ruby,Haskell:Prolog:Pascal
-43,,Eli ,Paredes,Shalom,,,,,Si,Equipo 5,https://github.com/LuisJavierMontielArenas/lenguajes20161_LuisJavierMontielArenas.git,,,,
-44,,Matias,Hernandez,Nancy,,,,,Si,Equipo 9,https://github.com/NancyMH/lenguajes20161_NancyMatias,,Java,C:Haskell,Prolog:SQL:Python:C++:PHP
-45,,Chavez,Sanchez,Julio David,,,,,Si,Equipo 10,,,Java:Haskell,C:C++:Prolog,Javascript:Python:Ruby:C#:Lua
-46,,Guerrero,Chavez,Diana Lucia,,,,,Si,Equipo 11,,,,,
+1,308043305,Abrego,Álvarez,Jonathan,C. Computación,2012,Ord,,Si,Equipo 2,git@github.com:firecold100/lenguajes20161_firecolod100.git,abreg.fc@gmail.com,Java:SQL:Ruby:C++,Haskell:C:Javascript:Python:PHP,Prolog:Vala
+2,310566104,Abud,Alcalá,Gibrán Abner,C. Computación,2013,Ord,,Si,Equipo 10,git@github.com:JulioDavid/lenguajes20161_KarlaAndrea.git,,,,
+3,311154243,Acosta,Hérnandez,Carlos Gerardo,C. Computación,2014,Ord,,Si,Equipo 3,git@github.com:Pernath/lenguajes20161_ReyVenado.git,,Java,Python:Prolog:Haskell:C:SQL:Vala,C++:C#:Cobol:Fortran:Pascal:Lisp
+4,305232355,Alanis,Colin,Cristian Ignacio,C. Computación,2009,Exl,,,,,,,,
+5,310090034,Anzures,Reyes,Miguel Alejandro,C. Computación,2013,Ord,,Si,Equipo 8,git@github.com:Alejandreyes/lenguajes20161_alejandreyes.git,alejandreyes36@gmail.com,Java,Prolog:Haskell:C++:Pascal,C:Python:Ruby
+6,309043511,Ascencio,Espindola,Jorge Eduardo,C. Computación,2012,Ord,,Si,Equipo 2,git@github.com:firecold100/lenguajes20161_firecolod100.git,yorche@ciencias.unam.mx,Java:Python:Haskell:Javascript:Ruby,C:C++:Prolog:PHP,Basic:Vala
+7,310030067,Beltrán,Hérnandez,Daniel,C. Computación,2013,Ord,,,Equipo 6,git@github.com:renejesusgv/lenguajes2016_renejesusgv.git,,Java:Python,C:Haskell,Prolog
+8,311256512,Bernal,Cedillo,Enrique Antonio,C. Computación,2014,Ord,,,Equipo 1,git@github.com:JorgeGarciaF/Lenguajes20161_JorgeGarciaF.git,enrique_bernal@ciencias.unam.mx,Java,Haskell:C:Python:Prolog,C++
+9,308037056,Bravo,García,Marco Antonio,C. Computación,2011,Ord,,,Equipo 0,git@github.com:JuanHerreraBrito/lenguajes20161_JuanHerrera.git,marcobravo@ciencias.unam.mx,,,
+10,310049063,Chávez,Sánchez,Julio David,C. Computación,2013,Ord,,,Equipo 10,git@github.com:JulioDavid/lenguajes20161_KarlaAndrea.git,,Java:Haskell,C:C++:Prolog,Javascript:Python:Ruby:C#:Lua
+11,310053291,Contreras,Maya,Karla Andrea,C. Computación,2013,Ord,,Si,Equipo 10,git@github.com:JulioDavid/lenguajes20161_KarlaAndrea.git,,Java:C,Haskell:Python:C++,PHP:Prolog
+12,304830020,Cruz,Franco,Jorge Rafael,C. Computación,2014,Ord,,Si,Equipo 19,git@github.com:rafacf128/lenguajes20161_JorgeCruz.git,,,,
+13,311234031,Dondiego,Pacheco,Ricardo Daniel,C. Computación,2014,Ord,,Si,Equipo 15,git@github.com:daniel-dondiego/lenguajes20161_-Daniel-Miguel-Victor-.git,,,,
+14,311106448,García,Flores,Jorge Luis,C. Computación,2014,Ord,,Si,Equipo 1,git@github.com:JorgeGarciaF/Lenguajes20161_JorgeGarciaF.git,jorgel_garciaf@ciencias.unam.mx,,Java:C++:Haskell:Prolog,C
+15,310084510,García,García,Raúl Eduardo,C. Computación,2013,Ord,,,,,,,,
+16,311008201,García,García,Ricardo,C. Computación,2014,Ord,,Si,Equipo 4,git@github.com:rodrigorojo/lenguajes20161_rodrigorojo.git,,Java:Python,Haskell:C:Prolog:Python,C++:Julia:Vala
+17,310285580,Gaspar,Velasco,René Jesús,C. Computación,2013,Ord,,,Equipo 6,git@github.com:renejesusgv/lenguajes2016_renejesusgv.git,,Java,Python:Haskell:C:Pascal:SQL,Javascript:Prolog
+18,310019569,Godínez,Galicia,Luis Alberto,C. Computación,2013,Ord,,Si,Equipo 16,git@github.com:LuisAlbertoGG/Lenguajes20161_LuisAlexRodrigo.git,,,,
+19,108000801,Gónzalez,Vargas,Andrea Itzel,C. Computación,2014,Ord,,Si,Equipo 3,git@github.com:Pernath/lenguajes20161_ReyVenado.git,,Java,C:C++,Haskell:Prolog:Python:Pascal
+20,305307451,Hérnandez,Hérnandez,Alvaro,C. Computación,2009,Exl,,,Equipo 13,git@github.com:sickpalmex/lenguajes20161_draco.git,draco_90@ciencias.unam.mx,,,
+21,413024435,López,López,Juan Carlos,C. Computación,2014,Ord,,Si,Equipo 4,git@github.com:rodrigorojo/lenguajes20161_rodrigorojo.git,,Java,C:Haskell:Prolog:Python,C++:Vala
+22,311279708,Márquez,Cortés,Francisco Javier,C. Computación,2014,Ord,,Si,Equipo 1,git@github.com:JorgeGarciaF/Lenguajes20161_JorgeGarciaF.git,franciscomarquez@ciencias.unam.mx,Java:C,Python:Haskell:Prolog:SQL,PHP:Ruby:Lisp:Vala:Fortran:Cobol
+23,307204655,Martínez,Martínez,Julio César,C. Computación,2010,Exl,,,Equipo 12,https://github.com/ricardorodab/lenguajes20161_RodriguezAbreuJoseRicardo.git,,Java:Haskell:Prolog:SQL,Python:C:Ruby,
+24,300195242,Medina,Peña,Raúl,C. Computación,2003,Exl,,Si,,,,,,
+25,311265075,Mendoza,Ponce,Miguel Angel,C. Computación,2014,Ord,,Si,Equipo 15,git@github.com:daniel-dondiego/lenguajes20161_-Daniel-Miguel-Victor-.git,,,,
+26,304141234,Meza,Trejo,José Luis,C. Computación,2008,Exl,,Si,,,,,,
+27,310276412,Montiel,Arenas,Luis Javier,C. Computación,2013,Ord,,,Equipo 5,git@github.com:LuisJavierMontielArenas/lenguajes20161_LuisJavierMontielArenas.git,,Javascript:Java:SQL,Python:C:Haskell:Prolog,Ruby:C++:C#
+28,307235943,Moreno,de la Rosa,Alan,C. Computación,2012,Ord,,,Equipo 2,git@github.com:firecold100/lenguajes20161_firecolod100.git,c_m_a1990@ciencias.unam.mx,Java,Python:SQL:Haskell:Prolog:C,PHP:Ruby:Vala:Lisp:Fortran:Pascal:Cobol:C#:C++
+29,306043220,Ortíz,Alarcón,César Martín,C. Computación,2009,Exl,,Si,,,,,,
+30,310293606,Quiróz,Jiménez,Anahi,C. Computación,2013,Ord,,Si,Equipo 9,git@github.com:NancyMH/lenguajes20161_NancyMatias.git,,Java,Python:C:Haskell:C++,PHP:C#:SQL
+31,107004095,Rivera,Mercado,Sergio,C. Computación,2013,Ord,,,Equipo 7,git@github.com:Sotoris/lenguajes20161_-Kappa-.git,,,,
+32,310216971,Rivera,Sotomayor,Luis Rafael,C. Computación,2013,Ord,,,Equipo 7,git@github.com:Sotoris/lenguajes20161_-Kappa-.git,,,,
+33,309216139,Rodríguez,Abreu,José Ricardo,C. Computación,2014,Ord,,Si,Equipo 12,https://github.com/ricardorodab/lenguajes20161_RodriguezAbreuJoseRicardo.git,,Java:SQL:C:Haskell,Ruby:C++,
+34,311177903,Rojo,Morales,Luis Rodrígo,C. Computación,2014,Ord,,Si,Equipo 4,git@github.com:rodrigorojo/lenguajes20161_rodrigorojo.git,,Java,Haskell,C++:Python:Prolog:Ruby
+35,309267526,Sánchez,Alcántara,Jesús Esteban,C. Computación,2012,Ord,,Si,Equipo 11,git@github.com:DiKim07/lenguajes20161_-SanchezAlcantara.git,jesestsana93@hotmail.com,,,
+36,307214098,Santos,Osuna,Jesús,C. Computación,2011,Ord,,,,,,,,
+37,310224994,Serrato,Solano,Víctor Manuel,C. Computación,2014,Ord,,Si,Equipo 15,git@github.com:daniel-dondiego/lenguajes20161_-Daniel-Miguel-Victor-.git,,Java:Python,SQL:C:Haskell,PHP:Ruby
+38,309316497,Tapía,Peralta,Edgar,C. Computación,2012,Ord,,,Equipo 6,git@github.com:renejesusgv/lenguajes2016_renejesusgv.git,,,,
+39,307293136,Zamudio,Cervantes,Luis Enrique,C. Computación,2011,Exl,,Si,Equipo 12,https://github.com/ricardorodab/lenguajes20161_RodriguezAbreuJoseRicardo.git,,,,
+40,302147395,Zúñiga,Cervantes,Luis Miguel,C. Computación,2006,Exl,,,,,,,,
+41,307188423,Herrera,Brito,Juan Jose,C. Computación,,,,,Equipo 0,git@github.com:JuanHerreraBrito/lenguajes20161_JuanHerrera.git,fenix.gnf19@gmail.com,Java:PHP:Javascript:C#,C:Python:TurboPascal,Haskell:Prolog:Ruby:R:Objectve-C
+42,,Esquivel,Guzman,Karla Adriana,C. Computación,,,,,Equipo 3,git@github.com:Pernath/lenguajes20161_ReyVenado.git,,Java,C:Ruby,Haskell:Prolog:Pascal
+43,,Eli ,Paredes,Shalom,C. Computación,,,,,Equipo 5,git@github.com:LuisJavierMontielArenas/lenguajes20161_LuisJavierMontielArenas.git,,,,
+44,,Matias,Hernandez,Nancy,C. Computación,,,,Si,Equipo 9,git@github.com:NancyMH/lenguajes20161_NancyMatias.git,,Java,C:Haskell,Prolog:SQL:Python:C++:PHP
+45,,Guerrero,Chavez,Diana Lucia,C. Computación,,,,,Equipo 11,git@github.com:DiKim07/lenguajes20161_-SanchezAlcantara.git,dianalguerrero@ciencias.unam.mx,,,
+46,,Soto,Perez,Adrian Rene,C. Computación,,,,,Equipo 14,git@github.com:asoto31/lenguajes20161_adrian_soto.git,asoto31@gmail.com,,,
+47,,Lazaro,Arias,Jorge Alberto,C. Computación,,,,,Equipo 11,git@github.com:DiKim07/lenguajes20161_-SanchezAlcantara.git,wolves@ciencias.unam.mx,,,
+48,303082800,Lozada,Mendez,Ivan,,,,,,Equipo 17,git@github.com:starforce88/lenguajes20161_Lozada.git,ivan_88@ciencias.unam.mx,,,
+49,310289588,Valdes,Garcia,Alejandro,,,,,Si,Equipo 16,git@github.com:LuisAlbertoGG/Lenguajes20161_LuisAlexRodrigo.git,ale.valdes@ciencias.unam.mx,,,
+50,310160991,Rivera,Paz,Rodrigo,,,,,Si,Equipo 16,git@github.com:LuisAlbertoGG/Lenguajes20161_LuisAlexRodrigo.git,rodrigo.rivera@ciencias.unam.mx,,,
+51,309256753,Martínez,López,Jaime Alberto,,,,,,Equipo 18,git@github.com:AGAARD/lenguajes20161_-xibalba-.git,,,,
