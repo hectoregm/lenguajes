@@ -1,0 +1,233 @@
+\documentclass{article}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm,letterpaper]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{verbatim, array}
+\usepackage{hyperref}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+
+\newcommand{\jimage}[2]{\includegraphics[width=#1\textwidth]{#2}\vskip10pt}
+\newcommand{\jcimage}[2]{\begin{center}\includegraphics[width=#1\textwidth]{#2}\end{center}\vskip10pt}
+
+\author{Profesora: Karla Ramírez Pulido \and
+  Ayudante: Héctor Enrique Gómez Morales}
+\title{Practica 3 - Tipos de Datos Parte 2 de 2}
+\date{Fecha de inicio: 2 de septiembre de 2015\\
+  \textbf{Fecha de entrega: 17 de septiembre de 2015}}
+\begin{document}
+\maketitle
+\section{Instrucciones}
+En esta práctica se tienen nueve ejercicios.
+
+Esta práctica debe ser implementada con la variante plai, es decir
+su archivo con terminación \textit{.rkt} debe tener como primer linea lo siguiente:
+\texttt{\#lang plai}. Pueden utilizar sólo la paquetería básica de
+\texttt{racket/base} y funciones auxiliares que ustedes definan.
+
+Todos los ejercicios requieren contar con pruebas mediante el uso de
+la función \texttt{test}:
+\begin{verbatim}
+(test <result-expr> <expected-expr>)
+\end{verbatim}
+
+En donde \textit{result-expr} es una expresión que se evalúa y su valor obtenido
+es comparado con valor obtenido de la expresión \textit{expected-expr} que es el
+valor esperado de la prueba. Si las dos expresiones evalúan a lo mismo la prueba
+imprime el éxito de la prueba, en caso contrario indicar un error.
+
+\begin{verbatim}
+> (test (+ 1 2) 3)
+(good (+ 1 2) 3 3 "at line 34")
+
+> (test (+ 1 2) 4)
+(bad (+ 1 2) 3 4 "at line 36")
+\end{verbatim}
+
+Cada ejercicio debe contar al menos con \textbf{cinco} pruebas.
+
+\section{Ejercicios}
+\textbf{Sección I. Heart Rate Zones} Para las siguientes funciones, se utilizaran los tipos de dato \verb;HRZ; y \verb;Time; definidos en \verb;practica3-base.rkt;:
+\begin{verbatim}
+(define-type HRZ
+  [resting (low number?)
+           (high number?)]
+  [warm-up (low number?)
+           (high number?)]
+  [fat-burning (low number?)
+               (high number?)]
+  [aerobic (low number?)
+           (high number?)]
+  [anaerobic (low number?)
+             (high number?)]
+  [maximum (low number?)
+           (high number?)])
+
+(define-type Time
+  [delta (distance number?)
+         (lhr number?)
+         (hhr number?)
+         (zone HRZ?)
+         (time number?)])
+\end{verbatim}
+
+El tipo de dato \verb;HRZ; representa las zonas de frecuencia cardiaca,
+cada zona tiene como parámetros en su constructor el mínimo y máximo ritmo cardiaco
+de la zona correspondiente.
+
+El tipo de dato \verb;Time; representa un intervalo de tiempo, se tiene el constructor del tipo \verb;delta; que toma una distancia recorrida, el mínimo y máximo ritmo cardiaco, la zona de frecuencia cardiaca y el tiempo total del intervalo.
+
+\begin{itemize}
+\item $\textbf{zones}$ - Dado el ritmo cardiaco de descanso y el máximo ritmo cardiaco de una persona se debe regresar la lista de zonas de frecuencia cardiaca. La formula utilizada comúnmente es:\\
+  $range = max - rest$\\
+  $zone\ 0\ (resting) = rest (Low\ Bound)$\\
+  $zone\ 0\ (resting) = (range * 0.5) - 1 (Upper\ Bound)$\\
+  $zone\ (i+1) = rest + range * (0.5 + (0.1 * i))\ (Low\ Bound)$\\
+  $zone\ (i+1) = rest + range * (0.5 + (0.1 * (i+1))) - 1\ (Upper\ Bound)$,\\
+  donde i = $0..4$, \textit{i.e.}
+
+\begin{verbatim}
+> (zones 50 180)
+(list
+ (resting 50 114.0)
+ (warm-up 115.0 127.0)
+ (fat-burning 128.0 140.0)
+ (aerobic 141.0 153.0)
+ (anaerobic 154.0 166.0)
+ (maximum 167.0 180))
+\end{verbatim}
+
+Para los siguientes ejemplos se define:
+\begin{verbatim}
+> (define my-zones (zones 50 180))
+\end{verbatim}
+
+\item $\textbf{get-zone}$ - Dado un símbolo que es el nombre de una zona y una lista de zonas regresar el tipo de dato correspondiente, \textit{i.e.}
+\begin{verbatim}
+> (get-zone 'anaerobic my-zones)
+(anaerobic 154.0 166.0)
+> (get-zone 'maximum my-zones)
+(maximum 167.0 180)
+\end{verbatim}
+
+\item $\textbf{bpm->zone}$ - Dado una lista de frecuencias cardiacas y una lista de zonas de frecuencia cardiaca regresar una lista de zonas por cada frecuencia cardiaca en la lista original, \textit{i.e.}
+\begin{verbatim}
+> (bpm->zone empty my-zones)
+'()
+> (bpm->zone '(50 60) my-zones) 
+(list (resting 50 114.0) (resting 50 114.0))
+> (bpm->zone '(140 141) my-zones) 
+(list (fat-burning 128.0 140.0) (aerobic 141.0 153.0))
+\end{verbatim}
+
+\item $\textbf{collect-deltas}$ - Dado una lista de deltas, obtener una nueva lista en que se agrupen las deltas consecutivas que compartan la misma zona. Al agruparse se suman las distancias y tiempos, mientras que se toman los mínimos y máximos de las frecuencias cardiacas del grupo, \textit{i.e.}
+\begin{verbatim}
+> (collect-deltas (list (delta 10 132 138 mfat 5) 
+                        (delta 10 136 139 mfat 8)))
+(list (delta 20 132 139 (fat-burning 128.0 140.0) 13))
+> (collect-deltas (list (delta 13 134 138 mfat 5) 
+                        (delta 14 136 138 mfat 5)
+                        (delta 17 141 142 maero 5)
+                        (delta 17 141 143 maero 5)))
+(list (delta 27 134 138 (fat-burning 128.0 140.0) 10) (delta 34 141 143 (aerobic 141.0 153.0) 10))
+\end{verbatim}
+\end{itemize}
+
+\textbf{Sección II. Árboles Binarios}
+Para las siguientes funciones, utiliza el tipo de dato \verb;BTree;
+definido en \verb;practica3-base.rkt;:
+\begin{verbatim}
+(define-type BTree
+  [EmptyBT]
+  [BNode (c procedure?)
+         (l BTree?)
+         (e any?)
+         (r BTree?)])
+\end{verbatim}
+
+Donde el primer parámetro del constructor de tipo \verb;BNode; es una función de comparación que recibe dos argumentos y regresa un booleano, indicando si el primer argumento es menor que el segundo. Para un árbol de números, la función de comparación sería \verb;<;, para strings sería \verb;string<?;. \\
+    
+En esta práctica utilizaremos abreviaciones para los constructores de tipos:
+
+\begin{enumerate}
+\item \verb;ebt; es lo mismo que \verb;(EmptyBT);
+\item \verb;(bnn ebt 1 ebt); es lo mismo que \verb;(BNode < (EmptyBT) 1 (EmptyBT));
+\item \verb;(bns ebt ``hello'' ebt); es lo mismo que \verb;(BNode string<? (EmptyBT) ``hello'' (EmptyBT));
+\end{enumerate}
+
+Por último, cuentas con la función \verb;printBT; que recibe un árbol de tipo \verb;BTree; y regresa su representación gráfica, para que puedas depurar tu código: \\
+
+\jimage{0.9}{imgs/printbt1.png}
+
+\newpage
+\begin{itemize}
+\item \texttt{ninBT} - Dado un árbol de tipo \verb;BTree;, determinar el número de nodos internos que tiene.
+\begin{verbatim}
+> (ninBT (EmptyBT))
+0
+> (ninBT (BNode < (BNode < (EmptyBT) 3 (EmptyBT)) 1 (BNode < (EmptyBT) 2 (EmptyBT))))
+1
+\end{verbatim}
+
+\item \texttt{nlBT} - Dado un árbol de tipo \verb;BTree;, determinar el número de hojas no vacías.
+\begin{verbatim}
+> (nlBT (EmptyBT))
+0
+> (nlBT (BNode < (BNode < (EmptyBT) 3 (EmptyBT)) 1 (BNode < (EmptyBT) 2 (EmptyBT))))
+2
+\end{verbatim}
+
+\item \texttt{nnBT} - Dado un árbol de tipo \verb;BTree;, determinar el número de nodos que tiene. Las hojas vacías no cuentan.
+\begin{verbatim}
+> (nnBT (EmptyBT))
+0
+> (nnBT (BNode < (BNode < (EmptyBT) 3 (EmptyBT)) 1 (BNode < (EmptyBT) 2 (EmptyBT))))
+3
+\end{verbatim}
+
+\item \texttt{mapBT} - Dado una función de aridad 1 y un árbol de tipo \verb;BTree;, aplicar la función sobre todos los valores de los nodos del árbol (las funciones de aridad 1 sólo regresas números).
+\begin{verbatim}
+> (mapBT add1 (EmptyBT))
+(EmptyBT)
+> (mapBT add1 (BNode < (EmptyBT) 1 (BNode < (EmptyBT) 2 (EmptyBT))))
+(BNode < (EmptyBT) 2 (BNode < (EmptyBT) 3 (EmptyBT)))
+> (mapAB (lambda (x) (* x x)) (BNode < (EmptyBT) 3 (BNode < (EmptyBT) 2 (EmptyBT))))
+(BNode < (EmptyBT) 9 (BNode < (EmptyBT) 4 (EmptyBT)))
+\end{verbatim}
+\end{itemize}
+
+\newpage
+\textbf{Punto extra:}
+Ahora, sea \verb;arbol-base;\dots
+\begin{verbatim}
+(define arbol-base (bns (bns (bns ebt "A" ebt) "B" (bns (bns ebt "C" ebt) "D" (bns ebt "E" ebt))) 
+                        "F"
+                        (bns ebt "G" (bns (bns ebt "H" ebt) "I" ebt))))
+\end{verbatim}
+
+\begin{enumerate}
+\item  \textbf{preorderBT} - Dado un árbol de tipo \verb;BTree;, regresar una lista de sus elementos recorridos en preorden.
+\begin{verbatim}
+> (preorderBT arbol-base)
+'("F" "B" "A" "D" "C" "E" "G" "I" "H")
+\end{verbatim}
+
+\item  \textbf{inorderBT}  - Dado un árbol de tipo \verb;BTree;, regresar una lista de sus elementos recorridos en inorden.
+\begin{verbatim}
+> (inorderBT arbol-base)
+'("A" "B" "C" "D" "E" "F" "G" "H" "I")
+\end{verbatim}
+
+\item \textbf{posorderBT} - Dado un árbol de tipo \verb;BTree;, regresar una lista de sus elementos recorridos en post-orden.
+\begin{verbatim}
+> (posorderBT arbol-base)
+'("A" "C" "E" "D" "B" "H" "I" "G" "F")
+\end{verbatim}
+   
+\end{enumerate}
+
+\jimage{0.8}{imgs/orders.png}
+
+\end{document}
