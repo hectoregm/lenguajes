@@ -50,10 +50,18 @@
     [`(Position () ,lat ,long) (list (xe->number lat)
                                      (xe->number long))]))
 
-(define (parse-trackpoint xe)
+(define (parse-hr xe)
   (match xe
-    [`(Trackpoint () ,time , position ,rest ...) (list (date->seconds (string->date (xe->string time) "~Y-~m-~dT~H:~M:~S"))
-                                                       (parse-position position))]))
+    [`(HeartRateBpm () ,value) (xe->number value)]))
+
+(define (parse-trackpoint xe)
+  (define (create-trackpoint time position hr)
+    (list (date->seconds (string->date (xe->string time) "~Y-~m-~dT~H:~M:~S"))
+          (parse-position position)
+          (parse-hr hr)))
+  (match xe
+    [`(Trackpoint () ,time , position ,altitude ,hr) (create-trackpoint time position hr)]
+    [`(Trackpoint () ,time , position ,hr) (create-trackpoint time position hr)]))
 
 (define (parse-track xe)
   (match xe
