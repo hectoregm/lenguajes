@@ -49,7 +49,7 @@ imprime el éxito de la prueba, en caso contrario indicar un error.
 Cada ejercicio debe contar al menos con \textbf{cinco} pruebas.
 
 \section{Ejercicios}
-\textbf{Sección I. Heart Rate Zones} Para las siguientes funciones, se utilizaran los tipos de dato \verb;HRZ; y \verb;Time; definidos en \verb;practica3-base.rkt;:
+\textbf{Sección I. Heart Rate Zones} Para las siguientes funciones, se utilizaran los tipos \verb;HRZ; ,\verb;Coordinate; y \verb;Frame; definidos en \verb;practica3-base.rkt;:
 \begin{verbatim}
 (define-type HRZ
   [resting (low number?)
@@ -65,19 +65,25 @@ Cada ejercicio debe contar al menos con \textbf{cinco} pruebas.
   [maximum (low number?)
            (high number?)])
 
-(define-type Time
-  [delta (distance number?)
-         (lhr number?)
-         (hhr number?)
-         (zone HRZ?)
-         (time number?)])
+(define-type Coordinate
+  [GPS (lat number?)
+       (long number?)])
+
+(define-type Frame
+  [trackpoint (loc GPS?)
+              (hr exact-integer?)
+              (zone HRZ?)
+              (unix-time exact-integer?)])
 \end{verbatim}
 
 El tipo de dato \verb;HRZ; representa las zonas de frecuencia cardiaca,
 cada zona tiene como parámetros en su constructor el mínimo y máximo ritmo cardiaco
 de la zona correspondiente.
 
-El tipo de dato \verb;Time; representa un intervalo de tiempo, se tiene el constructor del tipo \verb;delta; que toma una distancia recorrida, el mínimo y máximo ritmo cardiaco, la zona de frecuencia cardiaca y el tiempo total del intervalo.
+El tipo de dato \verb;Coordinate; representa una posición, se tiene el constructor
+de tipo \verb;GPS; que representa una posicion GPS que consta de una latitud y una longitud.
+
+El tipo de dato \verb;Frame; representa un instante o marco, se tiene el constructor del tipo \verb;trackpoint; que toma una coordenada GPS, un ritmo cardiaco, una zona de frecuencia cardiaca y una \verb;timestamp; usando \verb;UNIX time;.
 
 \begin{itemize}
 \item $\textbf{zones}$ - Dado el ritmo cardiaco de descanso y el máximo ritmo cardiaco de una persona se debe regresar la lista de zonas de frecuencia cardiaca. La formula utilizada comúnmente es:\\
@@ -122,17 +128,21 @@ Para los siguientes ejemplos se define:
 (list (fat-burning 128.0 140.0) (aerobic 141.0 153.0))
 \end{verbatim}
 
-\item $\textbf{collect-deltas}$ - Dado una lista de deltas, obtener una nueva lista en que se agrupen las deltas consecutivas que compartan la misma zona. Al agruparse se suman las distancias y tiempos, mientras que se toman los mínimos y máximos de las frecuencias cardiacas del grupo, \textit{i.e.}
+\item $\textbf{create-trackpoints}$ - Dado una lista en la que cada elemento de la lista contiene: un tiempo en formato \verb;UNIX;, una lista con la latitud y longitud y finalmente el ritmo cardiaco. Como segundo parámetro se tiene una lista de zonas cardiacas para así regresar una lista de \verb;trackpoint; que contengan la información dada. Se tiene definida la variable \verbr;raw-data; con datos reales para sus pruebas, \textit{i.e.}
 \begin{verbatim}
-> (collect-deltas (list (delta 10 132 138 mfat 5) 
-                        (delta 10 136 139 mfat 8)))
-(list (delta 20 132 139 (fat-burning 128.0 140.0) 13))
-> (collect-deltas (list (delta 13 134 138 mfat 5) 
-                        (delta 14 136 138 mfat 5)
-                        (delta 17 141 142 maero 5)
-                        (delta 17 141 143 maero 5)))
-(list (delta 27 134 138 (fat-burning 128.0 140.0) 10) (delta 34 141 143 (aerobic 141.0 153.0) 10))
+> (define sample (take raw-data 4))
+'((1425619654 (19.4907258 -99.24101) 104)
+  (1425619655 (19.4907258 -99.24101) 104)
+  (1425619658 (19.4907258 -99.24101) 108)
+  (1425619662 (19.4907107 -99.2410833) 106))
+> (create-trackpoints sample my-zones)
+(list
+ (trackpoint (GPS 19.4907258 -99.24101) 104 (resting 50 114.0) 1425619654)
+ (trackpoint (GPS 19.4907258 -99.24101) 104 (resting 50 114.0) 1425619655)
+ (trackpoint (GPS 19.4907258 -99.24101) 108 (resting 50 114.0) 1425619658)
+ (trackpoint (GPS 19.4907107 -99.2410833) 106 (resting 50 114.0) 1425619662))
 \end{verbatim}
+
 \end{itemize}
 
 \textbf{Sección II. Árboles Binarios}
