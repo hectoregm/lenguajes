@@ -20,7 +20,7 @@
 \begin{document}
 \maketitle
 \section{Instrucciones}
-En esta práctica se tienen nueve ejercicios.
+En esta práctica se tienen trece ejercicios.
 
 Esta práctica debe ser implementada con la variante plai, es decir
 su archivo con terminación \textit{.rkt} debe tener como primer linea lo siguiente:
@@ -77,21 +77,21 @@ Cada ejercicio debe contar al menos con \textbf{cinco} pruebas.
 \end{verbatim}
 
 El tipo de dato \verb;HRZ; representa las zonas de frecuencia cardiaca,
-cada zona tiene como parámetros en su constructor el mínimo y máximo ritmo cardiaco
-de la zona correspondiente.
+cada zona tiene como parámetros su mínimo y máximo ritmo cardiaco correspondiente.
 
 El tipo de dato \verb;Coordinate; representa una posición, se tiene el constructor
 de tipo \verb;GPS; que representa una posicion GPS que consta de una latitud y una longitud.
 
-El tipo de dato \verb;Frame; representa un instante o marco, se tiene el constructor del tipo \verb;trackpoint; que toma una coordenada GPS, un ritmo cardiaco, una zona de frecuencia cardiaca y una \verb;timestamp; usando \verb;UNIX time;.
+El tipo de dato \verb;Frame; representa un instante o marco, se tiene el constructor del tipo \verb;trackpoint; que toma una coordenada GPS, un ritmo cardiaco, una zona de frecuencia cardiaca y una \verb;timestamp; en formato \verb;UNIX time;.
 
 \begin{itemize}
 \item $\textbf{zones}$ - Dado el ritmo cardiaco de descanso y el máximo ritmo cardiaco de una persona se debe regresar la lista de zonas de frecuencia cardiaca. La formula utilizada comúnmente es:\\
   $range = max - rest$\\
-  $zone\ 0\ (resting) = rest (Low\ Bound)$\\
-  $zone\ 0\ (resting) = (range * 0.5) - 1 (Upper\ Bound)$\\
-  $zone\ (i+1) = rest + range * (0.5 + (0.1 * i))\ (Low\ Bound)$\\
-  $zone\ (i+1) = rest + range * (0.5 + (0.1 * (i+1))) - 1\ (Upper\ Bound)$,\\
+  $zone\ 0\ (resting) = rest\ (Minimo)$\\
+  $zone\ 0\ (resting) = (range * 0.5) - 1\ (Maximo)$\\
+
+  $zone\ (i+1) = rest + range * (0.5 + (0.1 * i))\ (Minimo)$\\
+  $zone\ (i+1) = rest + range * (0.5 + (0.1 * (i+1))) - 1\ (Maximo)$,\\
   donde i = $0..4$, \textit{i.e.}
 
 \begin{verbatim}
@@ -118,6 +118,8 @@ Para los siguientes ejemplos se define:
 (maximum 167.0 180)
 \end{verbatim}
 
+\newpage
+
 \item $\textbf{bpm->zone}$ - Dado una lista de frecuencias cardiacas y una lista de zonas de frecuencia cardiaca regresar una lista de zonas por cada frecuencia cardiaca en la lista original, \textit{i.e.}
 \begin{verbatim}
 > (bpm->zone empty my-zones)
@@ -128,16 +130,58 @@ Para los siguientes ejemplos se define:
 (list (fat-burning 128.0 140.0) (aerobic 141.0 153.0))
 \end{verbatim}
 
-\item $\textbf{create-trackpoints}$ - Dado una lista en la que cada elemento de la lista contiene: un tiempo en formato \verb;UNIX;, una lista con la latitud y longitud y finalmente el ritmo cardiaco. Como segundo parámetro se tiene una lista de zonas cardiacas para así regresar una lista de \verb;trackpoint; que contengan la información dada. Se tiene definida la variable \verbr;raw-data; con datos reales para sus pruebas, \textit{i.e.}
+\item $\textbf{create-trackpoints}$ - Dado una lista en la que cada elemento de la lista contiene: un tiempo en formato \verb;UNIX;, una lista con la latitud y longitud y finalmente el ritmo cardiaco. Como segundo parámetro se tiene una lista de zonas cardiacas con lo que se tiene que regresar una lista de \verb;trackpoint;s que contengan la información dada. Se tiene definida la variable \verb;raw-data; con datos reales para sus pruebas, \textit{i.e.}
 \begin{verbatim}
-> (define sample (take raw-data 4))
+> (take raw-data 4))
 '((1425619654 (19.4907258 -99.24101) 104)
   (1425619655 (19.4907258 -99.24101) 104)
   (1425619658 (19.4907258 -99.24101) 108)
   (1425619662 (19.4907107 -99.2410833) 106))
-> (create-trackpoints sample my-zones)
+> (create-trackpoints (take raw-data 4) my-zones)
 (list
  (trackpoint (GPS 19.4907258 -99.24101) 104 (resting 50 114.0) 1425619654)
+ (trackpoint (GPS 19.4907258 -99.24101) 104 (resting 50 114.0) 1425619655)
+ (trackpoint (GPS 19.4907258 -99.24101) 108 (resting 50 114.0) 1425619658)
+ (trackpoint (GPS 19.4907107 -99.2410833) 106 (resting 50 114.0) 1425619662))
+\end{verbatim}
+
+\item $\textbf{total-distance}$ - Dada una lista de \verb;trackpoint;s, regresar la distancia total recorrida, \textit{i.e.}
+\begin{verbatim}
+> (define sample (create-trackpoints (take raw-data 100) my-zones))
+> (total-distance (create-trackpoints sample my-zones))
+0.9509291243812747
+> (define trackpoints (create-trackpoints raw-data my-zones))
+> (total-distance trackpoints)
+5.051934549322941
+\end{verbatim}
+
+\item $\textbf{average-hr}$ - Dada una lista de \verb;trackpoint;s, regresar el promedio del ritmo cardiaco, el resultado debe ser un entero \textit{i.e.}
+\begin{verbatim}
+> (average-hr sample)
+134
+> (average-hr trackpoints)
+150
+\end{verbatim}
+
+\item $\textbf{max-hr}$ - Dada una lista de \verb;trackpoint;s, regresar el máximo ritmo cardiaco, el resultado debe ser un entero \textit{i.e.}
+\begin{verbatim}
+> (max-hr sample)
+147
+> (max-hr trackpoints)
+165
+\end{verbatim}
+
+\item $\textbf{collapse-trackpoints}$ - Dada una lista de \verb;trackpoint;s y un epsilon \verb;e;, obtener una nueva lista en que se agrupen los deltas consecutivos dado que se cumpla lo siguiente: la distancia de un trackpoint al otro trackpoint debe ser menor o igual a \verb;e; y los trackpoints deben tener el mismo ritmo cardiaco, \textit{i.e.}
+\begin{verbatim}
+> (define sample-four (create-trackpoints (take raw-data 4) my-zones))
+> sample-four
+(list
+ (trackpoint (GPS 19.4907258 -99.24101) 104 (resting 50 114.0) 1425619654)
+ (trackpoint (GPS 19.4907258 -99.24101) 104 (resting 50 114.0) 1425619655)
+ (trackpoint (GPS 19.4907258 -99.24101) 108 (resting 50 114.0) 1425619658)
+ (trackpoint (GPS 19.4907107 -99.2410833) 106 (resting 50 114.0) 1425619662))
+> (collapse-trackpoints sample-four 0.01)
+(list
  (trackpoint (GPS 19.4907258 -99.24101) 104 (resting 50 114.0) 1425619655)
  (trackpoint (GPS 19.4907258 -99.24101) 108 (resting 50 114.0) 1425619658)
  (trackpoint (GPS 19.4907107 -99.2410833) 106 (resting 50 114.0) 1425619662))
@@ -171,7 +215,6 @@ Por último, cuentas con la función \verb;printBT; que recibe un árbol de tipo
 
 \jimage{0.9}{imgs/printbt1.png}
 
-\newpage
 \begin{itemize}
 \item \texttt{ninBT} - Dado un árbol de tipo \verb;BTree;, determinar el número de nodos internos que tiene.
 \begin{verbatim}
@@ -209,8 +252,7 @@ Por último, cuentas con la función \verb;printBT; que recibe un árbol de tipo
 \end{itemize}
 
 \newpage
-\textbf{Punto extra:}
-Ahora, sea \verb;arbol-base;\dots
+\item  Ahora, sea \verb;arbol-base;\dots
 \begin{verbatim}
 (define arbol-base (bns (bns (bns ebt "A" ebt) "B" (bns (bns ebt "C" ebt) "D" (bns ebt "E" ebt))) 
                         "F"

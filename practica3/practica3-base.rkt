@@ -35,15 +35,15 @@
   [maximum (low number?)
            (high number?)])
 
-(define-type Coordinates
+(define-type Coordinate
   [GPS (lat number?)
        (long number?)])
 
 (define-type Frame
-  [delta (loc GPS?)
-         (hr number?)
-         (zone HRZ?)
-         (unix-time exact-integer?)])
+  [trackpoint (loc GPS?)
+              (hr exact-integer?)
+              (zone HRZ?)
+              (unix-time exact-integer?)])
 
 (define (parse-position xe)
   (match xe
@@ -88,7 +88,7 @@
 
 (define run-data:xml:no-ws ((eliminate-whitespace '(TrainingCenterDatabase Activities Activity Lap Track Trackpoint Position HeartRateBpm)) run-data:xml))
 (define run-data:xe (xml->xexpr run-data:xml:no-ws))
-(define trackpoints (parse-data run-data:xe))
+(define raw-data (parse-data run-data:xe))
 
 ;; BTree
 (define-type  BTree
