@@ -1,14 +1,26 @@
 #lang plai
 
 (require 2htdp/image)
+(require xml)
+(require racket/date)
+(require (only-in srfi/19 string->date))
 
 (print-only-errors false)
 
-;; any? Dado cualquier valor x, regresa #t
-;
+;; any? Given any value x, regresa #t
 (define (any? x) #t)
 
-;; Tipo de datos seccion I
+;; Helper functions for handling xexpr nodes
+(define (xe->string xe)
+  (string-append* (filter string? xe)))
+
+(define (xe->number xe)
+  (string->number (xe->string xe)))
+
+(define (xe-string=? xe str)
+  (string=? str (xe->string xe)))
+
+;; Data Types from section I
 (define-type HRZ
   [resting (low number?)
            (high number?)]
@@ -29,13 +41,48 @@
 
 (define-type Frame
   [delta (loc GPS?)
-         (lhr number?)
-         (hhr number?)
+         (hr number?)
          (zone HRZ?)
          (unix-time exact-integer?)])
 
-;; BTree - Tipo de dato
-;
+(define (parse-position xe)
+  (match xe
+    [`(Position () ,lat ,long) (list (xe->number lat)
+                                     (xe->number long))]))
+
+(define (parse-trackpoint xe)
+  (match xe
+    [`(Trackpoint () ,time , position ,rest ...) (list (date->seconds (string->date (xe->string time) "~Y-~m-~dT~H:~M:~S"))
+                                                       (parse-position position))]))
+
+(define (parse-track xe)
+  (match xe
+    [`(Track () ,trackpoints ...) (map parse-trackpoint trackpoints)]))
+
+(define (parse-lap xe)
+  (match xe
+    [`(Lap ,start ,total ,distance ,calories ,avghr ,maxhr ,intensity ,trigger ,track) (parse-track track)]))
+
+(define (parse-activity xe)
+  (match xe
+    [`(Activity ((Sport "Running")) ,id ,lap) (parse-lap lap)]))
+
+(define (parse-activities xe)
+  (match xe
+    [`(Activities () ,activity) (parse-activity activity)]))
+
+(define (parse-data xe)
+  (match xe
+    [`(TrainingCenterDatabase () ,activities) (parse-activities activities)]))
+
+(define FILENAME "run-data.tcx")
+(define run-data:xml (document-element (read-xml (open-input-file FILENAME))))
+
+(define run-data:xml:no-ws ((eliminate-whitespace '(TrainingCenterDatabase Activities Activity Lap Track Trackpoint Position HeartRateBpm)) run-data:xml))
+(define run-data:xe (xml->xexpr run-data:xml:no-ws))
+(define trackpoints (parse-data run-data:xe))
+
+;; BTree
 (define-type  BTree
   [EmptyBT]
   [BNode (c procedure?) ; Funcion de comparacion, recibe dos argumentos,
