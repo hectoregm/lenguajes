@@ -1,5 +1,7 @@
 #lang plai
 
+(print-only-errors true)
+
 (define (mconcat lst1 lst2)
   (cond
     [(empty? lst2) lst1]
