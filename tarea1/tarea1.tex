@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm,letterpaper]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\author{Profesora: Karla Ramírez Pulido \and
+  Ayudante: Héctor Enrique Gómez Morales}
+\title{Tarea 1}
+\date{Fecha de inicio: 9 de septiembre de 2015\\
+  \textbf{Fecha de entrega: 18 de septiembre de 2015}}
+\begin{document}
+\maketitle
+\section{Problema I}
+
+Hemos visto en clase que la definición de sustitución resulta en una operación ineficiente: en el peor caso es de orden cuadrático en relación al tamaño del programa (considerando el tamaño del programa como el numero de nodos en el árbol de sintaxis abstracta). También se vio la alternativa de diferir la sustitución por medio ambientes. Sin embargo, implementar un ambiente usando un stack no parece ser mucho mas eficiente.
+
+Responde las siguientes preguntas.
+\begin{itemize}
+\item Provee un esquema para un programa que ilustre la no-linealidad de la implementación de ambientes basada en un stack. Explica brevemente porque su ejecución en tiempo no es lineal con respecto al tamaño de su entrada.
+\item Describe una estructura de datos para un ambiente que un interprete de \texttt{FWAE} pueda usar para mejorar su complejidad
+\item Muestra como usaría el interpreté esta nueva estructura de datos.
+\item Indica cual es la nueva complejidad del interprete (análisis del peor caso) y de forma informal pero rigurosa pruébalo.
+\end{itemize}
+
+\section{Problema II}
+Dada la siguiente expresión de \texttt{FWAE}:
+\begin{verbatim}
+{with {x 4}
+  {with {f {fun {y} {+ x y}}}
+    {with {x 5}
+      {f 10}}}}
+\end{verbatim}
+debe evaluar a $(num\ 14)$ usando alcance estático, mientras que usando alance dinamico se obtendría $(num\ 15)$, Ahora Ben un agudo pero excéntrico estudiante dice que podemos seguir usando alcance dinámico mientras tomemos el valor mas viejo de \verb;x; en el ambiente en vez del nuevo y para este ejemplo el tiene razón.
+\begin{itemize}
+\item{¿ Lo que dice Ben esta bien en general? si es el caso justificalo. }
+\item{Si Ben esta equivocado entonces da un programa de contraejemplo y explica
+por que la estrategia de evaluación de Ben podría producir una respuesta incorrecta.}
+\end{itemize}
+
+\section{Problema III}
+Dada la siguiente expresión de \texttt{FWAE} con \verb;with; multi-parametrico:
+\begin{verbatim}
+{with {{x 5} {adder {fun {x} {fun {y} {+ x y}}}} {z 3}}
+                        {with {{y 10} {add5 {adder x}}}
+                              {add5 {with {{x {+ 10 z}} {y {add5 0}}}
+                                      {+ {+ y x} z}}}}}
+\end{verbatim}
+\begin{itemize}
+\item Da la forma Bruijn de la expresión anterior.
+\item Realiza la corrida de esta expresión, es decir escribe explícitamente cada una de las llamadas tanto para \texttt{subst} y \texttt{interp}, escribiendo además los resultados parciales en sintaxis concreta.
+\end{itemize}
+\end{document}
