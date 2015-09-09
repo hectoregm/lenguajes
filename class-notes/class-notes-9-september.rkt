@@ -34,6 +34,14 @@
 (test (mmap cdr '((1 2 3) (4 5 6) (7 8 9))) '((2 3) (5 6) (8 9)))
 (test (mmap car '((1 2 3) (2 3 4) (3 4 5))) '(1 2 3))
 
+;; This special function is based on the idea of operating element by element with the function received from left to right in the list.
+;; It was done thinking of the binary non-conmutative functions, such as pow or the substraction. 
+(define (reduce2 f lst)
+  (cond
+    [(empty? lst) empty]
+    [(empty? (cdr lst)) (car lst)]
+    [else (reduce2 f (mconcat (list (f (car lst) (cadr lst))) (cddr lst)))]))
+
 ;; mpowerset : (listof a) -> (listof b)
 (define (mpowerset lst)
   (define (p-aux elem lst)
@@ -46,3 +54,9 @@
 (test (mpowerset '()) '(()))
 (test (mpowerset '(1)) '(() (1)))
 (test (mpowerset '(1 2)) '(() (2) (1) (1 2)))
+
+;; mpowerset2
+(define (mpowerset2 lst)
+ (cond
+ [(empty? lst) '(())]
+ [else (mconcat (mpowerset2 (cdr lst)) (mmap (lambda (s) (cons (car lst) s)) (mpowerset2 (cdr lst))) )]))

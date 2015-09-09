@@ -50,7 +50,7 @@
   [numV (n number?)]
   [closureV (param symbol?)
             (body FAE?)
-            (ds Env?)])
+            (env Env?)])
 
 (define (parse sexp)
   (cond
@@ -97,21 +97,21 @@
 ;; interp : FAE Env -> FAE-Value
 ;; evaluates FAE expressions by reducing them to their corresponding values
 ;; returns FAE-Value
-(define (interp expr ds)
+(define (interp expr env)
   (type-case FAE expr
     [num (n) (numV n)]
-    [add (l r) (num+ (interp l ds) (interp r ds))]
-    [sub (l r) (num- (interp l ds) (interp r ds))]
-    [id (v) (lookup v ds)]
+    [add (l r) (num+ (interp l env) (interp r env))]
+    [sub (l r) (num- (interp l env) (interp r env))]
+    [id (v) (lookup v env)]
     [fun (bound-id bound-body)
-         (closureV bound-id bound-body ds)]
+         (closureV bound-id bound-body env)]
     [app (fun-expr arg-expr)
-         (local ([define fun-val (interp fun-expr ds)])
+         (local ([define fun-val (interp fun-expr env)])
            (if (closureV? fun-val)
                (interp (closureV-body fun-val)
                        (aSub (closureV-param fun-val)
-                             (interp arg-expr ds)
-                             (closureV-ds fun-val)))
+                             (interp arg-expr env)
+                             (closureV-env fun-val)))
                (error 'interp (string-append (~a fun-expr) " expression is not a function"))))]))
 (test (interp (desugar (parse '3)) (mtSub)) (numV 3))
 (test (interp (desugar (parse '{fun {x} x})) (mtSub)) (closureV 'x (id 'x) (mtSub)))
