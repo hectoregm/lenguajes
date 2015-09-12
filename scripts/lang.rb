@@ -39,6 +39,30 @@ class Lang < Thor
       puts %x(cd #{dir}; git status)
     end
   end
+
+  desc 'tag NAME', 'Tag all repos with the given NAME.'
+  def tag(name)
+    teams = JSON.parse(File.read('teams.json'))
+
+    teams.each do |_, team_data|
+      match = team_data['repo'].match %r{\/([^\/]*)\.git}
+      dir = match[1]
+      puts "\nAdd tag #{name} to repo #{dir}"
+      puts %x(cd #{dir}; git tag -a #{name} -m 'Tag #{name}'; git push origin #{name})
+    end
+  end
+
+  desc 'exec COMMAND', 'Execute COMMAND on all repos.'
+  def exec(command)
+    teams = JSON.parse(File.read('teams.json'))
+
+    teams.each do |_, team_data|
+      match = team_data['repo'].match %r{\/([^\/]*)\.git}
+      dir = match[1]
+      puts "\nExecuting #{command} on repo #{dir}"
+      puts %x(cd #{dir}; #{command})
+    end
+  end
 end
 
 Lang.start(ARGV)
