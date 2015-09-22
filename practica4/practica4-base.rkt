@@ -7,6 +7,8 @@
   [numS (n number?)]
   [withS (bindings (listof bind?))
          (body FAES?)]
+  [with*S (bindings (listof bind?))
+          (body FAES?)]
   [idS (name symbol?)]
   [funS (params (listof symbol?))
         (body FAES?)]
@@ -47,9 +49,9 @@
 ;; "Parsea" la lista de bindings lst en sintaxis concreta
 ;; mientras revisa la lista de id's en busca de repetidos.
 ;; (define (parse-bindings lst) 
-(define (parse-bindings lst)
+(define (parse-bindings lst allow)
   (let ([bindRep (buscaRepetido lst (lambda (e1 e2) (symbol=? (car e1) (car e2))))])
-    (if (boolean? bindRep)
+    (if (or (boolean? bindRep) allow)
         (map (lambda (b) (bind (car b) (parse (cadr b)))) lst)
         (error 'parse-bindings (string-append "El id " (symbol->string (car bindRep)) " está repetido")))))
 
@@ -89,7 +91,8 @@
     [(number? sexp) (numS sexp)]
     [(list? sexp)
      (case (car sexp)
-       [(with) (withS (parse-bindings (cadr sexp)) (parse (caddr sexp)))]
+       [(with) (withS (parse-bindings (cadr sexp) #f) (parse (caddr sexp)))]
+       [(with*) (with*S (parse-bindings (cadr sexp) #t) (parse (caddr sexp)))]
        [(fun) (funS (cadr sexp) (parse (caddr sexp)))]
        [(+ - / *) (binopS (elige (car sexp)) (parse (cadr sexp)) (parse (caddr sexp)))]
        [else (appS (parse (car sexp)) (map parse (cdr sexp)))])]))

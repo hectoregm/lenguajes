@@ -29,7 +29,7 @@ El objetivo de esta práctica es hacer un intérprete del lenguaje \texttt{FAE} 
 
 Usaremos la definición y aplicación de funciones para implementar la funcionalidad del \texttt{with}, dado que:
 \begin{verbatim}
-{with {var named} body}
+{with {var named-expr} body}
 
 \end{verbatim}
 
@@ -37,7 +37,7 @@ lo reemplazamos con
 
 \begin{verbatim}
 {{fun {var} body}
-  named}
+  named-expr}
 \end{verbatim}
 
 Es decir las expresiones \texttt{with} son \emph{syntatic sugar}. Para realizar esto se definirá una función \texttt{desugar} que tomara una expresión en sintaxis \texttt{FAES} a una expresión en sintaxis \texttt{FAE}. Para luego hacer el interprete del árbol de sintaxis abstracta de \texttt{FAE} que debe ser de alcance estático por medio de ambientes.
@@ -53,14 +53,14 @@ Es decir las expresiones \texttt{with} son \emph{syntatic sugar}. Para realizar 
          | {<binop> <FAES> <FAES>}
          | {with {{<id> <FAES>}+} <FAES>}
          | {with* {{<id> <FAES>}+} <FAES>}
-         | {fun {<id>+} <FAES>+}
-         | {<FAES> <FAES>+}
+         | {fun {<id>*} <FAES>+}
+         | {<FAES> <FAES>*}
 
 <FAE>::= <num>
          | <id>
          | {<binop> <FAE> <FAE>}
-         | {fun {<id>+} <FAE>+}
-         | {<FAE> <FAE>+}
+         | {fun {<id>*} <FAE>+}
+         | {<FAE> <FAE>*}
 \end{verbatim}
 
 \begin{center}
@@ -83,22 +83,12 @@ la función \texttt{test}:
 
 \item \grade{2} \textbf{desugar} Define una función que toma una expresión en sintaxis \texttt{FAES} y que regresa una expresión en sintaxis \texttt{FAE}.
 
-\item \grade{2} \textbf{multi-param} Adecua el \texttt{interp} de tal manera que las funciones acepten una lista de parámetros y que las aplicaciones de funciones sean de múltiples argumentos.
+\item \grade{3} \textbf{multi-param} Adecua el \texttt{interp} de tal manera que las funciones acepten una lista de parámetros y que las aplicaciones de funciones sean de múltiples argumentos.
 
-\item \grade{1} \textbf{with*} Adecua a \texttt{desugar} de tal manera que se tenga expresiones \texttt{with*} que tienen la misma semántica de \texttt{let*} de Racket, en donde cada \texttt{bound-expr} es evaluada una a una y creándose el binding en cuanto el valor se ha obtenido.
+\item \grade{3} \textbf{with*} Adecua a \texttt{desugar} de tal manera que se tenga expresiones \texttt{with*} que tienen la misma semántica de \texttt{let*} de Racket, en donde cada \texttt{named-expr} es evaluada una a una y se crea inmediatamente el \textit{binding} con el valor obtenido.
 
-\item \grade{4} \textbf{interp} En base al código de \texttt{p4-base.rkt}, implementar el intérprete, dado un árbol de sintaxis abstracta, evaluar y regresar un valor de tipo \texttt{FAE-Value} que considera las variantes numV y closureV. closureV es el constructor de tipo que recibe un parámetro, tiene un cuerpo de tipo \texttt{FAE} y un ambiente de tipo Env. Env considera las variantes de tipo mtSub y aSub, donde el constructor aSub recibe un símbolo, un valor de tipo \texttt{FAE-Value} y otro ambiente Env.
+\item \grade{2} \textbf{interp} En base al código de \texttt{p4-base.rkt}, implementar el intérprete, dado un árbol de sintaxis abstracta, evaluar y regresar un valor de tipo \texttt{FAE-Value} que considera las variantes numV y closureV. closureV es el constructor de tipo que recibe un parámetro, tiene un cuerpo de tipo \texttt{FAE} y un ambiente de tipo Env. Env considera las variantes de tipo mtSub y aSub, donde el constructor aSub recibe un símbolo, un valor de tipo \texttt{FAE-Value} y otro ambiente Env.
 
-\end{enumerate}
-
-\textbf{Punto extra:}
-\begin{enumerate}
-\item \textbf{lexer} Dada una cadena de caracteres, generar el código de sintaxis concreta del lenguaje FAE. Nota que un lexer sencillo sólo genera \emph{tokens} del código fuente que se lee directamente como cadenas de caracteres. Nuestro \emph{lexer} a diferencia, realizará el balanceo de paréntesis generando listas anidadas acorde a los caracteres \texttt{\{} y \texttt{\}} que se vayan presentando.
-\begin{verbatim}
-> (lexer "{with {{x 1} {y 2} {f {fun {x} {+ x 1}}}} {f y}}")
-'(with ((x 1) (y 2) (f (fun (x) (+ x 1)))) (f y))
-\end{verbatim}
-Observación. El código de sintaxis concreta sólo son listas, símbolos y números. Ésta debe ser una entrada válida al parser si la cadena de caracteres es correcta.
 \end{enumerate}
 
 \end{document}

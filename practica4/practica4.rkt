@@ -1,21 +1,13 @@
 #lang plai
 
-(require "p4-base.rkt")
+(require "practica4-base.rkt")
 
 (print-only-errors true)
 
 (define (desugar expr)
-  (type-case FAES expr
-    [numS (n) (num n)]
-    [idS (s) (id s)]
-    [binopS (f l r) (binop f (desugar l) (desugar r))]
-    [withS (bindings body) (app (fun (map (lambda (bind) 
-                                            (bind-name bind)) bindings)
-                                     (desugar body))
-                                (map (lambda (bind)
-                                       (desugar (bind-val bind))) bindings))]
-    [funS (params body) (fun params (desugar body))]
-    [appS (fun args) (app (desugar fun) (map (lambda (arg) (desugar arg)) args))]))
+  ;; Implementar desugar
+  (error 'desugar "Not implemented"))
+
 
 (test (desugar (parse '{+ 3 4})) (binop + (num 3) (num 4)))
 (test (desugar (parse '{+ {- 3 4} 7})) (binop + (binop - (num 3) (num 4)) (num 7)))
@@ -47,6 +39,9 @@
 (test (rinterp (cparse '{{{fun {x} x} {fun {x} {+ x 5}}} 3})) (numV 8))
 (test (rinterp (cparse '{with {{x 3}} {fun {y} {+ x y}}})) (closureV '(y) (binop + (id 'x) (id 'y)) (aSub 'x (numV 3) (mtSub))))
 (test (rinterp (cparse '{with {{x 10}} {{fun {y} {+ y x}} {+ 5 x}}})) (numV 25))
-
 (test (rinterp (cparse '{with {{x 1} {y 2} {z 3}} {+ {+ x y} z}})) (numV 6))
 (test (rinterp (cparse '{{fun {x y z} {+ {+ x y} z}} 1 2 3})) (numV 6))
+(test (rinterp (cparse '{with* {{x 3} {y {+ 2 x}} {z {+ x y}}} z})) (numV 8))
+(test (rinterp (cparse '{with* {{x 3} {y {+ 2 x}} {x 10} {z {+ x y}}} z})) (numV 15))
+(test/exn (rinterp (cparse '{with {{x 10} {x 20}} x})) "El id x está repetido")
+(test (rinterp (cparse '{with* {{x 10} {x 20}} x})) (numV 20))
