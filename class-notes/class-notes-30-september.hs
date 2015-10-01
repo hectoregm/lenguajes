@@ -12,6 +12,9 @@ listCopy [] = []
 listCopy (x:s) = x : listCopy s
 
 ones = 1 : ones
+twos = 2 : twos
+
+lists = [ones, twos]
 
 front :: Int -> [a] -> [a]
 front _ [] = []
