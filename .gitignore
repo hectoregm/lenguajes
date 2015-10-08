@@ -1,10 +1,12 @@
 *.aux
 *.dvi
 *.log
-*.pdf
 *.toc
 *~
 *.out
 .DS_Store
 compiled
 *.zip
+practica*.pdf
+tarea*.pdf
+lineamiento*.pdf
