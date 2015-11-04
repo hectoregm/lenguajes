@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm,letterpaper]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\author{Profesora: Karla Ramírez Pulido \and
+  Ayudante: Héctor Enrique Gómez Morales}
+\title{Tarea 2}
+\date{Fecha de inicio: 4 de noviembre de 2015\\
+  \textbf{Fecha de entrega: 18 de noviembre de 2015}}
+\begin{document}
+\maketitle
+\section*{Problema I}
+Considera el siguiente programa:
+
+\begin{verbatim}
+(+ 1 (first (cons true empty)))
+\end{verbatim}
+
+Este programa tiene un error de tipos.
+
+Genera restricciones para este programa. Aísla el conjunto mas pequeño de
+estas restricciones tal que, resultas juntas, identifiquen el error de tipos.
+
+\section*{Problema II}
+Considera la siguiente expresión con tipos:
+
+\begin{verbatim}
+{fun {f : C1 } : C2
+  {fun {x : C3 } : C4
+    {fun {y : C5 } : C6
+      {cons x {f {f y}}}}}}
+\end{verbatim}
+
+Dejamos los tipos sin especificar (Cn) para que sean llenados por el proceso
+de inferencia de tipos. Deriva restricciones de tipos para el programa anterior.
+Luego resuelve estas restricciones. A partir de estas soluciones, rellena los
+valores de las Cn. Asegurate de mostrar todos los pasos especificados por los
+algoritmos (i.e., escribir la respuesta basandose en la intuicion o el conocimiento
+es insuficiente). Deberas usar variables de tipo cuando sea necesario.
+Para no escribir tanto, puedes etiquetar cada expresion con una variable de tipos
+apropiada, y presentar el resto del algoritmo en terminos solamente de estas
+variables de tipos.
+
+\section*{Problema III}
+Considera los juicios de tipos discutidos en clase para un lenguaje gloton (en el capitulo de Juicios de Tipos del libro de Shriram). Considera ahora la version perezosa
+del lenguaje. Pon especial atencion a las reglas de tipado para:
+
+\begin{itemize}
+\item definicion de funciones
+\item aplicacion de funciones
+\end{itemize}
+
+Para cada una de estas, si crees que la regla original no cambia, explica por que no
+(Si crees que ninguna de las dos cambia, puedes responder las dos partes juntas).
+Si crees que algun otro juicio de tipos debe cambiar, mencionalo tambien.
+\end{document}
