@@ -77,7 +77,7 @@ direct=0
 }
 \end{verbatim}
 
-\textbf{Formato xml:}
+\textbf{Formato XML:}
 \begin{verbatim}
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE graph PUBLIC "-//FC//DTD matrix//EN" "./graph.dtd">
@@ -110,10 +110,9 @@ direct=0
 </graph>
 \end{verbatim}
 
-En esta practica será trabajara en la implementación de gráficas (dirigidas y no dirigidas), haciendo uso de un lenguaje orientado a objetos haciendo uso de herencia y polimorfismo.
+En esta practica se trabajara en la implementación de gráficas (dirigidas y no dirigidas), haciendo uso de un lenguaje orientado a objetos haciendo uso de herencia y polimorfismo.
 
-Esta práctica debe ser implementada haciendo uso de \textbf{Javascript} por medio
-de marco de trabajo \textbf{node.js}.
+Esta práctica debe ser implementada haciendo uso de \textbf{Javascript} o \textbf{Python}.
 
 Se debe incluir un archivo \texttt{README} que indique las instrucciones para correr su programa.
 
@@ -125,7 +124,7 @@ Se debe incluir un archivo \texttt{README} que indique las instrucciones para co
 
   \begin{itemize}
   \item \textbf{directed}, regresa u booleano, \texttt{true} si la gráfica es dirigida y \texttt{false} en caso contrario.
-  \item \textbf{vertices}, regresa un arreglo con todos los vertices de la gráfica.
+  \item \textbf{vertices}, regresa un arreglo con todos los vértices de la gráfica.
   \item \textbf{edges}, regresa todas las aristas de la gráfica.
   \end{itemize}
 
@@ -146,13 +145,13 @@ Se debe incluir un archivo \texttt{README} que indique las instrucciones para co
 
  \item \grade{3} \textbf{GraphReader} Deben implementar una clase que tome una ruta a un archivo (ya sea \texttt{XML, JSON, CSV}) y que regrese un objeto de la clase \texttt{Graph}
 
- \item \grade{1} \textbf{has\_cycles} Se debe de implementar un método que tome una gráfica y regrese \texttt{true} si la gráfica tiene ciclos o \texttt{false} en caso contrario.
+ \item \grade{1} \textbf{has\_cycles} Se debe de implementar un método en \texttt{Graph} que regrese \texttt{true} si la gráfica tiene un ciclo o \texttt{false} en caso contrario.
 
    Finalmente al correr su programa se debe cargar cada uno de los formatos para la gráfica de petersen y la gráfica \texttt{graph} que se encuentran en el directorio \texttt{ejemplos} de la practica y imprimir lo siguiente:
    
    \begin{itemize}
    \item El nombre del archivo de la gráfica, ie. petersen.json o graph.xml
-   \item Los vertices de la gráfica
+   \item Los vértices de la gráfica
    \item Las aristas de la gráfica con sus pesos
    \item Indicar si la gráfica tiene ciclos.
    \end{itemize}
