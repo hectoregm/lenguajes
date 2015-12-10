@@ -1,0 +1,163 @@
+\documentclass{article}
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm,letterpaper]{geometry}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{verbatim, array}
+\usepackage{hyperref}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+
+\newcommand{\gradeone}{(\textbf{1pt}) }
+\newcommand{\grade}[1]{(\textbf{#1pts}) }
+\newcommand{\jimage}[2]{\includegraphics[width=#1\textwidth]{#2}\vskip10pt}
+\newcommand{\jcimage}[2]{\begin{center}\includegraphics[width=#1\textwidth]{#2}\end{center}\vskip10pt}
+
+\author{Profesora: Karla Ramírez Pulido \and
+  Ayudante: Héctor Enrique Gómez Morales}
+\title{Practica Reposición - Recolección de Basura}
+\date{Fecha de inicio: 11 de diciembre de 2015\\
+  \textbf{Fecha de entrega: 4 de enero de 2015}}
+\begin{document}
+\maketitle
+\section{Instrucciones}
+
+Una gráfica $G = (V, E)$ es un par ordenado compuesto por un conjunto $V$ de vértices y un conjunto $E$ de aristas.
+En esta practica la gráfica se puede representar en tres tipos de formatos.
+
+
+\textbf{Formato CSV:} En el primer renglón se indica si la gráfica es dirigida (direct=1) o no (direct=0).
+En cada renglón subsecuente se define una arista de la gráfica, las dos primeras columnas indican
+el vértice origen y el vértice destino de la arista. La tercera columna indica el peso de la arista.
+
+\begin{verbatim}
+direct=0
+"a", "b", 11
+"a", "e", 1
+"a", "f", 4
+"b", "c", 8
+"b", "g", 8
+"c", "d", 3
+"c", "h", 3
+"d", "e", 3 
+"d", "i", 2
+"e", "j", 1
+"f", "h", 9
+"f", "i", 7
+"g", "i", 4
+"g", "j", 1
+"h", "j", 9
+\end{verbatim}
+
+
+\textbf{Formato JSON:} Es el formato mas popular para el intercambio de información en Web. se tienen tres llaves: \texttt{direct, vertices y edges}. La primera \texttt{direct} indica con un entero si la gráfica es dirigida (direct: 1) o si es no dirigida (direct: 0). En la llave \texttt{vertices} se tiene un arreglo con los todos los vertices de la gráfica, finalmente en la llave \texttt{edges} se tiene un arreglo con las aristas de la gráfica. 
+
+\begin{verbatim}
+{
+  "direct": 0
+  "vertices": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+  "edges": [
+    ["a", "b", 11],
+    ["a", "e", 1],
+    ["a", "f", 4],
+    ["b", "c", 8],
+    ["b", "g", 8],
+    ["c", "d", 3],
+    ["c", "h", 3],
+    ["d", "e", 3],
+    ["d", "i", 2],
+    ["e", "j", 1],
+    ["f", "h", 9],
+    ["f", "i", 7],
+    ["g", "i", 4],
+    ["g", "j", 1],
+    ["h", "j", 9]
+  ]
+}
+\end{verbatim}
+
+\textbf{Formato XML:}
+\begin{verbatim}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE graph PUBLIC "-//FC//DTD matrix//EN" "./graph.dtd">
+<graph direct="0">
+  <vertex label="a"/>
+  <vertex label="b"/>	
+  <vertex label="c"/>
+  <vertex label="d"/>
+  <vertex label="e"/>
+  <vertex label="f"/>
+  <vertex label="g"/>
+  <vertex label="h"/>
+  <vertex label="i"/>
+  <vertex label="j"/>
+  <edge source="a" target="b" weight="11"/>
+  <edge source="a" target="e" weight="1"/>
+  <edge source="a" target="f" weight="4"/>
+  <edge source="b" target="c" weight="8"/>
+  <edge source="b" target="g" weight="8"/>
+  <edge source="c" target="d" weight="3"/>
+  <edge source="c" target="h" weight="3"/>
+  <edge source="d" target="e" weight="3"/>
+  <edge source="d" target="i" weight="2"/>
+  <edge source="e" target="j" weight="1"/>
+  <edge source="f" target="h" weight="9"/>
+  <edge source="f" target="i" weight="7"/>
+  <edge source="g" target="i" weight="4"/>
+  <edge source="g" target="j" weight="1"/>
+  <edge source="h" target="j" weight="9"/>
+</graph>
+\end{verbatim}
+
+En esta practica se trabajara en la implementación de gráficas (dirigidas y no dirigidas), haciendo uso de un lenguaje orientado a objetos haciendo uso de herencia y polimorfismo.
+
+Esta práctica debe ser implementada haciendo uso de \textbf{Javascript} o \textbf{Python}.
+
+Se debe incluir un archivo \texttt{README} que indique las instrucciones para correr su programa.
+
+\section{Ejercicios}
+
+\begin{enumerate}
+
+\item \grade{3} \textbf{Graph} Implementar una clase que represente una gráfica debe tener por lo menos los siguientes métodos:
+
+  \begin{itemize}
+  \item \textbf{directed}, regresa u booleano, \texttt{true} si la gráfica es dirigida y \texttt{false} en caso contrario.
+  \item \textbf{vertices}, regresa un arreglo con todos los vértices de la gráfica.
+  \item \textbf{edges}, regresa todas las aristas de la gráfica.
+  \end{itemize}
+
+\item \grade{1.5} \textbf{Vertex} Clase que representa un vértice de la gráfica, debe tener por lo menos los siguiente métodos:
+
+  \begin{itemize}
+  \item \textbf{neighbours}, regresa los vertices adyacentes del vértice dado.
+  \item \textbf{degree}, regresa el grado del vértice.
+  \end{itemize}
+
+\item \grade{1.5} \textbf{Edges} Clase que representa una arista de la gráfica, debe tener por lo menos los siguientes métodos:
+
+  \begin{itemize}
+  \item \textbf{svertex}, regresa el vértice origen de la arista.
+  \item \textbf{tvertex}, regresa el vértice destino de la arista.
+  \item \textbf{weight}, regresa el peso de la arista.
+  \end{itemize}
+
+ \item \grade{3} \textbf{GraphReader} Deben implementar una clase que tome una ruta a un archivo (ya sea \texttt{XML, JSON, CSV}) y que regrese un objeto de la clase \texttt{Graph}
+
+ \item \grade{1} \textbf{has\_cycles} Se debe de implementar un método en \texttt{Graph} que regrese \texttt{true} si la gráfica tiene un ciclo o \texttt{false} en caso contrario.
+
+   Finalmente al correr su programa se debe cargar cada uno de los formatos para la gráfica de petersen y la gráfica \texttt{graph} que se encuentran en el directorio \texttt{ejemplos} de la practica y imprimir lo siguiente:
+   
+   \begin{itemize}
+   \item El nombre del archivo de la gráfica, ie. petersen.json o graph.xml
+   \item Los vértices de la gráfica
+   \item Las aristas de la gráfica con sus pesos
+   \item Indicar si la gráfica tiene ciclos.
+   \end{itemize}
+
+ \textbf{IMPORTANTE:} Se restaran 2 puntos de no presentarse herencia y/o polimorfismo en alguno de los puntos anteriormente mencionados.
+
+\end{enumerate}
+
+\end{document}
