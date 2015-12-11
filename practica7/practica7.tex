@@ -22,5 +22,32 @@
 \begin{document}
 \maketitle
 \section{Instrucciones}
+Implementarás un recolector de basura, a escoger \textbf{marcado & barrido} o \textbf{detente & copia}.
+Como vimos, la recolección de basura involucra comenzar desde el \textit{conjunto raíz} de referencias,
+que residen en las variables locales y los \textit{stack frames}, y buscar los valores alcanzables en el heap.
+Para esta práctica incluimos código de soporte para que tu recolector tenga acceso al conjunto raiz de un
+programa en ejecución, de tal forma que solo tendrás que concentrarte en la implementación de los algoritmos de
+recolección de basura.
+
+El codigo de soporte esta incluido en el archivo zip que contiene este documento, también esta disponible
+en: \textbf{http://valhalla.fciencias.unam.mx/lenguajes/gc-support.tgz}
+
+\section*{GC Collector Racket}
+En tu recolector deberás utilizar el lenguaje \textbf{#lang plai/collector} al iniico del archivo
+para tener a tu disposicion los siguientes procedimientos:
+
+\begin{enumerate}
+\item \verb;(get-root-set id ...);: produce una lista que representa el conjunto actual de raices, incluyendo
+  una entrada por cada \verb;id; adicional.
+\item \verb;(root-name root);: dada una raíz, regresa su nombre como un símbolo. Si la raíz corresponde a una
+  variable del programa, el nombre sera el mismo. En otro caso, sera tmpXXX. Este procedimiento te ayudara a
+  depurar tu recolector.
+\item \verb;(read-root root);: dada una raíz, regresa la localidad a la que hace referencia en el momento
+  actual.
+\item \verb;(set-root! root new-loc);: dada una raíz y una localidad, actualiza la raíz para hacer referencia
+  a una nueva localidad.
+\item \verb;(procedure-roots proc);: dado un closure almacenado en el heap, regresa el conjunto raíz que es
+  alcanzable desde el ambiente del closure, si el \verb;proc; no es alcanzable, regresa la lista vacía.
+\end{enumerate}
 
 \end{document}
