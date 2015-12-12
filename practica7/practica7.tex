@@ -36,7 +36,7 @@ en: \textbf{http://valhalla.fciencias.unam.mx/lenguajes/gc-support.tgz}
 En tu recolector deberás utilizar el lenguaje \textbf{#lang plai/collector} al iniico del archivo
 para tener a tu disposicion los siguientes procedimientos:
 
-\begin{enumerate}
+\begin{itemize}
 \item \verb;(get-root-set id ...);: produce una lista que representa el conjunto actual de raices, incluyendo
   una entrada por cada \verb;id; adicional.
 \item \verb;(root-name root);: dada una raíz, regresa su nombre como un símbolo. Si la raíz corresponde a una
@@ -48,6 +48,20 @@ para tener a tu disposicion los siguientes procedimientos:
   a una nueva localidad.
 \item \verb;(procedure-roots proc);: dado un closure almacenado en el heap, regresa el conjunto raíz que es
   alcanzable desde el ambiente del closure, si el \verb;proc; no es alcanzable, regresa la lista vacía.
-\end{enumerate}
+\end{itemize}
+
+\section*{collector.ss}
+Incluimos un \textbf{collector} trivial que no realiza recolección de basura (i.e., cuando se acaba la memoria
+simplemente se detiene y marca un error). Tendrias que realizar tu propio modulo -para el algoritmo de recoleccion
+que escogiste- que implementen la misma interfaz. La interfaz es como sigue:
+
+\begin{itemize}
+\item \verb;gc:alloc-flat : num U sym U bool U empty -> loc;: Este procedimiento debería almacenar un valor
+  plano de Racket (number, symbol, boolean, empty list) en el heap, regresando su localidad (un numero). El valor
+  debería ocupar una celda en el heap, aunque puedes usar espacio adicional para almacenar una etiqueta, etc.
+  Puedes pre-almacenar constantes comunes (e.g., empty list) . De ser necesario, este procedimiento debe
+  realizar recolección de basura, si después de esto, el espacio sigue siendo insuficiente, se debería lanzar
+  un error.
+\end{itemize}
 
 \end{document}
