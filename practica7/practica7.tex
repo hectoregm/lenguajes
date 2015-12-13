@@ -17,12 +17,12 @@
 \author{Profesora: Karla Ramírez Pulido \and
   Ayudante: Héctor Enrique Gómez Morales}
 \title{Practica Reposición - Recolección de Basura}
-\date{Fecha de inicio: 11 de diciembre de 2015\\
+\date{Fecha de inicio: 12 de diciembre de 2015\\
   \textbf{Fecha de entrega: 4 de enero de 2016}}
 \begin{document}
 \maketitle
 \section{Instrucciones}
-Implementarás un recolector de basura, a escoger \textbf{marcado & barrido} o \textbf{detente & copia}.
+Implementarás un recolector de basura, a escoger \textbf{marcado \& barrido} o \textbf{detente \& copia}.
 Como vimos, la recolección de basura involucra comenzar desde el \textit{conjunto raíz} de referencias,
 que residen en las variables locales y los \textit{stack frames}, y buscar los valores alcanzables en el heap.
 Para esta práctica incluimos código de soporte para que tu recolector tenga acceso al conjunto raíz de un
@@ -33,7 +33,7 @@ El codigo de soporte esta incluido en el archivo zip que contiene este documento
 en: \textbf{http://valhalla.fciencias.unam.mx/lenguajes/gc-support.tgz}
 
 \section*{GC Collector Racket}
-En tu recolector deberás utilizar el lenguaje \textbf{#lang plai/collector} al inicio del archivo
+En tu recolector deberás utilizar el lenguaje \textbf{\#lang plai/collector} al inicio del archivo
 para tener a tu disposicion los siguientes procedimientos:
 
 \begin{itemize}
@@ -97,7 +97,7 @@ Durante la recolección, necesitaras usar \verb;get-root-set; para obtener el co
 pasar los argumentos (los campos \verb;first; y \verb;rest;), ya que son raíces (Si no los listas, sera necesario
 que los trates de manera especial y los actualices con \verb;set!;).
 
-En el recolector \textbf{marcado & barrido} debes mantener una lista libre en el heap. Es decir, no deberías
+En el recolector \textbf{marcado \& barrido} debes mantener una lista libre en el heap. Es decir, no deberías
 usar una estructura de datos auxiliar; en vez de eso, utiliza el espacio disponible en el heap para mantener
 registro de la lista libre. Puedes usar una caja extra ("\textbf{register}") para apuntar al inicio de la lista
 libre. Es posible que necesites ajustar tu almacenamiento para tener suficiente espacio para guardar apuntadores
@@ -110,10 +110,10 @@ Otros consejos:
 \begin{itemize}
 \item Prueba tu programa con tamaños de heap pequeños, para que la recolección de basura se realice
   frecuentemente.
-\item No necesitas compactar la memoria en \textbf{marcado & barrido}.
+\item No necesitas compactar la memoria en \textbf{marcado \& barrido}.
 \item Puede ser conveniente usar el constructor \textbf{set!} de Racket, el cual permite mutar una variable
   sin usar cajas. Te recomendamos utilizar esta característica en un caso: al intercambiar los semi-espacios
-  en el recolector \textbf{detente & copia}. Esto te evitara el problema de "destapar" el heap cada vez que lo
+  en el recolector \textbf{detente \& copia}. Esto te evitara el problema de "destapar" el heap cada vez que lo
   uses.
 \end{itemize}
 
