@@ -25,7 +25,7 @@
 Implementarás un recolector de basura, a escoger \textbf{marcado & barrido} o \textbf{detente & copia}.
 Como vimos, la recolección de basura involucra comenzar desde el \textit{conjunto raíz} de referencias,
 que residen en las variables locales y los \textit{stack frames}, y buscar los valores alcanzables en el heap.
-Para esta práctica incluimos código de soporte para que tu recolector tenga acceso al conjunto raiz de un
+Para esta práctica incluimos código de soporte para que tu recolector tenga acceso al conjunto raíz de un
 programa en ejecución, de tal forma que solo tendrás que concentrarte en la implementación de los algoritmos de
 recolección de basura.
 
@@ -33,11 +33,11 @@ El codigo de soporte esta incluido en el archivo zip que contiene este documento
 en: \textbf{http://valhalla.fciencias.unam.mx/lenguajes/gc-support.tgz}
 
 \section*{GC Collector Racket}
-En tu recolector deberás utilizar el lenguaje \textbf{#lang plai/collector} al iniico del archivo
+En tu recolector deberás utilizar el lenguaje \textbf{#lang plai/collector} al inicio del archivo
 para tener a tu disposicion los siguientes procedimientos:
 
 \begin{itemize}
-\item \verb;(get-root-set id ...);: produce una lista que representa el conjunto actual de raices, incluyendo
+\item \verb;(get-root-set id ...);: produce una lista que representa el conjunto actual de raíces, incluyendo
   una entrada por cada \verb;id; adicional.
 \item \verb;(root-name root);: dada una raíz, regresa su nombre como un símbolo. Si la raíz corresponde a una
   variable del programa, el nombre sera el mismo. En otro caso, sera tmpXXX. Este procedimiento te ayudara a
@@ -52,16 +52,80 @@ para tener a tu disposicion los siguientes procedimientos:
 
 \section*{collector.ss}
 Incluimos un \textbf{collector} trivial que no realiza recolección de basura (i.e., cuando se acaba la memoria
-simplemente se detiene y marca un error). Tendrias que realizar tu propio modulo -para el algoritmo de recoleccion
+simplemente se detiene y marca un error). Tendrías que realizar tu propio modulo -para el algoritmo de recolección
 que escogiste- que implementen la misma interfaz. La interfaz es como sigue:
 
 \begin{itemize}
 \item \verb;gc:alloc-flat : num U sym U bool U empty -> loc;: Este procedimiento debería almacenar un valor
   plano de Racket (number, symbol, boolean, empty list) en el heap, regresando su localidad (un numero). El valor
   debería ocupar una celda en el heap, aunque puedes usar espacio adicional para almacenar una etiqueta, etc.
-  Puedes pre-almacenar constantes comunes (e.g., empty list) . De ser necesario, este procedimiento debe
+  Puedes pre-almacenar constantes comunes (e.g., empty list). De ser necesario, este procedimiento debe
   realizar recolección de basura, si después de esto, el espacio sigue siendo insuficiente, se debería lanzar
   un error.
+\item \verb;init-allocator : -> void;: Este procedimiento es el primero que ejecuta un \textbf{mutator}. Aquí
+  puedes poner cualquier condición inicial para tu \textbf{collector}, en la implementación que se entrega no se
+  hace nada.
+\item \verb;gc-flat? : loc -> boolean;: Este procedimiento debería regresar \verb;true; si el contenido de la
+  localidad dada es de tipo "flat". En otro caso, debería regresar \verb;false;, nunca deberá regresar un error.
+\item \verb;gc:deref : loc -> num U sym U bool U empty;: Dada una localidad de un valor plano de Racket,
+  este procedimiento regresaría ese valor; si la localidad apunta a una celda \verb;cons;, esta función debería
+  lanzar un error.
+\item \verb;gc:cons : loc loc -> loc;: Este procedimiento debería almacenar una celda cons en el heap, cuyos
+  \verb;first; y \verb;rest; son los argumentos dados. Estos campos deben ser almacenados en celdas diferentes
+  del heap, y puedes utilizar espacio adicional para una etiqueta, etc. De ser necesario, como con
+  \verb;alloc-flat;, este procedimiento puede realizar recolección de basura. Si después de esto, el espacio sigue siendo insuficiente, se debería lanzar un error.
+\item \verb;gc:cons? : loc -> boolean;: Debería regresar \verb;true; si la localidad se refiere a una celda
+  \verb;cons;
+\item \verb;gc:first : loc -> loc;: Si la localidad dada se refiere a una celda \verb;cons;, debería regresar
+  el campo \verb;first;. En otro caso, debería lanzar un error.
+\item \verb;gc:rest : loc -> loc;: Si la localidad dada se refiere a una celda \verb;rest;. En otro caso, debería
+  lanzar un error.
+\end{itemize}
+
+\section*{GC Mutator Racket (mutator.ss)}
+Este modulo define un lenguaje en el cual puedes implementar aplicaciones de prueba (\textbf{mutators}) para
+tus recolectores. Un programa escrito en este lenguaje obtendrá sus raíces a través de \verb;get-root-set;,
+almacenara sus datos en tu heap, y usara las versiones de las primitivas definidas en tu \textbf{collector}.
+(Cuando se hace referencias a procedimientos como \verb;cons; o \verb;symbol?;, las llamadas son automáticamente
+redireccionadas a \verb;gc:cons; y \verb;gc:symbol?; definidas en tu \textbf{collector}).
+El tamaño del heap que se utiliza se define mediante el procedimiento \verb;allocator-setup;, el cual recibe
+el nombre del archivo donde se encuentra tu \textbf{collector} y el tamaño del heap que se utiliza.
+
+\section*{Notas}
+Durante la recolección, necesitaras usar \verb;get-root-set; para obtener el conjunto de raíces actual. En
+\verb;gc:alloc-flat;, no deberías listar ningún identificador adicional. Sin embargo, en \verb;gc:cons;, debe
+pasar los argumentos (los campos \verb;first; y \verb;rest;), ya que son raíces (Si no los listas, sera necesario
+que los trates de manera especial y los actualices con \verb;set!;).
+
+En el recolector \textbf{marcado & barrido} debes mantener una lista libre en el heap. Es decir, no deberías
+usar una estructura de datos auxiliar; en vez de eso, utiliza el espacio disponible en el heap para mantener
+registro de la lista libre. Puedes usar una caja extra ("\textbf{register}") para apuntar al inicio de la lista
+libre. Es posible que necesites ajustar tu almacenamiento para tener suficiente espacio para guardar apuntadores
+a listas libres!.
+
+Probablemente quieras utilizar números para representar localidades, pero puedes utilizar otra representación
+si esta facilita tu implementación.
+
+Otros consejos:
+\begin{itemize}
+\item Prueba tu programa con tamaños de heap pequeños, para que la recolección de basura se realice
+  frecuentemente.
+\item No necesitas compactar la memoria en \textbf{marcado & barrido}.
+\item Puede ser conveniente usar el constructor \textbf{set!} de Racket, el cual permite mutar una variable
+  sin usar cajas. Te recomendamos utilizar esta característica en un caso: al intercambiar los semi-espacios
+  en el recolector \textbf{detente & copia}. Esto te evitara el problema de "destapar" el heap cada vez que lo
+  uses.
+\end{itemize}
+
+\section*{FAQ}
+
+\begin{itemize}
+\item \verb;get-root-set; parece regresar raíces duplicadas. ¿ Es un bug en el código de soporte ? No,
+  ese es el comportamiento que se quiere. Las raíces vienen de recorrer el stack, y es posible que muchos frames
+  hagan referencia a la misma variable. Es mas, variables diferentes pueden hacer referencia a la misma localidad
+  en el heap. Necesitas actualizar \textbf{todos} ellos en tu recolector.
+\item Seria mucho mas fácil si pudiera hacer que todos los objetos consumieran la misma cantidad de espacio. ¿ Eso seria aceptable ? No! Hemos sido extremadamente tolerantes en que solo manejes \textit{dos} tamaños. Reducirlo
+  a un tamaño haría que el problema no fuera realista y por el contrario fuera trivial.
 \end{itemize}
 
 \end{document}
